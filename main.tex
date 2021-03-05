@@ -1,0 +1,106 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{graphicx}
+\usepackage[font=normal,textfont=it]{caption}
+\DeclareCaptionType{Code} %Preparation for eventual code numbering
+\renewcommand{\theCode}{\arabic{Code}}
+
+\usepackage{subcaption}
+%\usepackage[numbers]{natbib}
+\usepackage{url}
+\usepackage{array}
+\usepackage{makecell}
+\usepackage{comment}
+%\usepackage{fixltx2e}
+%% Language and font encodings
+
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{csquotes} % Removes a compilation warning
+\usepackage{changepage}
+
+%SI Package
+\usepackage[binary-units=true]{siunitx}
+%\sisetup{group-separator = \text{\,}}
+%\sisetup{group-minimum-digits = {4}}
+
+%footnote
+\usepackage[bottom]{footmisc}
+
+%% Sets page size and margins
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=1.75cm]{geometry}
+
+%% Useful packages
+\usepackage{amsmath}
+\DeclareMathOperator{\E}{\mathbb{E}}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{textcomp} %defines \perthousand and \micro for gensymb
+\usepackage{gensymb} %math in text
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+%\usepackage[colorinlistoftodos]{todonotes}
+%\usepackage[colorlinks=true, allcolors=black]{hyperref}
+
+%packages for hyperlinperlin
+%\usepackage{hyperref}
+%\hypersetup{pdftex,colorlinks=false,allcolors=black}
+%\usepackage{hypcap}
+
+%Bibliography
+\usepackage[sorting=none]{biblatex}
+\addbibresource{references.bib}
+
+
+
+\usepackage{chngcntr}
+%\counterwithin{figure}{section}
+\counterwithin{table}{section}
+
+%\usepackage[table,xcdraw]{xcolor}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{adjustbox}
+\usepackage{textgreek}
+\usepackage{multirow}
+\usepackage{color}
+\usepackage[table,xcdraw,dvipsnames]{xcolor}
+\usepackage{wrapfig}
+\usepackage[final]{pdfpages}
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+}
+\renewcommand{\familydefault}{\sfdefault}
+
+\title{Inter-seasonal performance of Gaussian Process models for building temperature prediction}
+\author{Radu C. Martin}
+
+%header
+%\usepackage[headsep=0.5cm,margin=1.5cm,bottom=2cm,headheight=5pt,includeheadfoot]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\setlength\headheight{35pt}
+%\fancyhf{Inter-seasonal performance of GP models for building temperature prediction}
+\fancyhf{Inter-seasonal GP performance for HVAC}
+\rhead{\includegraphics[width=2cm]{Logo-EPFL.png}}
+\lhead{}
+\cfoot{\thepage}
+
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+
+\setlength{\parskip}{0.5em}
+
+\setlength\parindent{0pt}
+
+
+\begin{document}
+\selectlanguage{english}
+
+\input{00_First_Page.tex}
+
+\tableofcontents
+\clearpage
+
+\input{01_Introduction.tex}
+\end{document}
