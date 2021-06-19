@@ -1,22 +1,346 @@
 \section{Gaussian Processes Background}
 
-{\color{red} \lipsum[1-5]}
+The \acrfull{gp} is a member of the \textit{kernel machines} class of algorithms
+in the field of machine learning.
 
-% TODO: [GP Background] General info and math background on GP
+The formal definition~\cite{rasmussenGaussianProcessesMachine2006} of
+\acrlong{gp} states that:
 
-% TODO: [GP Background] Definition of GP (from Rasmussen book?)
 
-% TODO: [GP Background] Some relevant information from the GP modeling textbook
+\begin{displayquote}
+    A Gaussian Process is a collection of random variables, any finite number of
+    which have a joint Gaussian distribution.
+\end{displayquote}
+
+A \acrshort{gp} is completely specified by a mean and a covariance function:
+
+\begin{equation}
+    \begin{aligned}
+        m(\mathbf{x}) &= \mathbb{E}[f(\mathbf{x})] \\
+        k(\mathbf{x}, \mathbf{x'}) &= \mathbb{E}[f(\mathbf{x} -
+        m(\mathbf{x}))(f(\mathbf{x'}) - m(\mathbf{x'}))]
+    \end{aligned}
+\end{equation}
+
+This notation is commonly abbreviated as:
+
+\begin{equation}
+    f(\mathbf{x}) \sim \mathcal{GP}(m(\mathbf{x}), k(\mathbf{x}, \mathbf{x'}))
+\end{equation}
+
+Making the simplifying assumption of $m(\mathbf{x}) = 0$, we have the joint
+distribution of the training outputs $f$, and the test outputs $f_*$ according
+to the given prior:
+
+\begin{equation}
+    \begin{bmatrix}
+        \mathbf{f} \\
+        \mathbf{f_*} \\
+    \end{bmatrix} = 
+    \mathcal{N}\left(
+        \mathbf{0}, 
+        \begin{bmatrix}
+            K(X, X) & K(X, X_*) \\
+            K(X_*, X) & K(X_*, X_*) \\
+        \end{bmatrix}
+    \right)
+\end{equation}
+
+In the case of noisy observations, assuming $y = f + \epsilon$  with $\epsilon
+\sim \mathcal{N}(0, \sigma_n^2)$, we have the following joint distribution:
+
+\begin{equation}
+    \begin{bmatrix}
+        \mathbf{y} \\
+        \mathbf{f_*} \\
+    \end{bmatrix} = 
+    \mathcal{N}\left(
+        \mathbf{0}, 
+        \begin{bmatrix}
+            K(X, X) + \sigma_n^2 I& K(X, X_*) \\
+            K(X_*, X) & K(X_*, X_*) \\
+        \end{bmatrix}
+    \right)
+\end{equation}
+
+which, for the rest of the section, will be used in the abbreviated form:
+
+\begin{equation}
+    \begin{bmatrix}
+        \mathbf{y} \\
+        \mathbf{f_*} \\
+    \end{bmatrix} = 
+    \mathcal{N}\left(
+        \mathbf{0}, 
+        \begin{bmatrix}
+            K + \sigma_n^2 I& K_*^T \\
+            K_* & K_{**} \\
+        \end{bmatrix}
+    \right)
+\end{equation}
+
+
+\subsection{Parameter learning}
+
+"Training" a \acrshort{gp} is the process of finding the kernel parameters that
+best explain the data. This is done by maximizing the probability density
+function for the observations $y$i, also known as the marginal likelihood:
+
+\begin{equation}\label{eq:gp_likelihood}
+    p(y) = \frac{1}{\sqrt{(2\pi)^{n}\det{\left(K + \sigma_n^2I\right)}}}
+    \exp{\left(-\frac{1}{2}y^T\left(K + \sigma_n^2I\right)^{-1}y\right)}
+\end{equation}
+
+In order to simplify computation in actual \acrshort{gp} implementations, the
+value that gets maximized is the log of Equation~\ref{eq:gp_likelihood}, the log
+marginal likelihood:
+
+\begin{equation}\label{eq:gp_log_likelihood}
+    log(p(y)) = - \frac{1}{2}\log{\left(
+                                \det{\left(
+                                        K + \sigma_n^2I
+                                \right)}
+                            \right)}
+                - \frac{1}{2}y^T\left(
+                                    K + \sigma_n^2I
+                                \right)^{-1}y
+                - \frac{n}{2}\log{\left(2\pi\right)}
+\end{equation}
+
+\subsection{Prediction}
+
+\begin{equation}
+    \begin{aligned}
+        \mathbf{f_*} = \mathbb{E}\left(f_*|X, \mathbf{y}, X_*\right) &=
+        K_*\left(K + \sigma_n^2I\right)^{-1}\mathbf{y} \\
+        cov(\mathbf{f_*}) &= K_{**} - K_*\left(K +\sigma_n^2I\right)^{-1}K_*^T \\
+    \end{aligned}
+\end{equation}
+
+
+Apply the zero mean \acrshort{gp} to the \textit{difference} between the
+observations and the fixed mean function:
+
+\begin{equation}
+    \bar{\mathbf{f}}_* = \mathbf{m}(X_*) + K_*\left(K + 
+    \sigma_n^2I\right)^{-1}(\mathbf{y} - \mathbf{m}(X)) \\
+\end{equation}
 
 \subsection{Kernels}
+The choice of the kernel is an important part for any kernel machine class
+algorithm. It serves the purpose of shaping the behaviour of the \acrshort{gp}
+by imposing a desired level of smoothness of the resulting functions, a
+prediodicity, linearity, etc. This extends the use cases of the \acrshort{gp}
+models while including any available prior information of the system to be
+modeled.
 
-% TODO: [GP Background] Different kernels used in dynamical systems with math
+For the purpose of identifying a dynamical system, a few kernels are popular
+choices~\cite{kocijanModellingControlDynamic2016}: 
 
-\subsection{SVGP}
 
-% TODO: [GP Background] High level and math parts of SVGP
+\subsubsection*{Squared Exponential Kernel}
 
-% TODO: [GP Background] Add citation for SVGP (look in GPflow source code)
+This kernel is used when the system to be modelled is assumed to be smooth and
+continuous. The basic version of the \acrshort{se} kernel has the following form:
 
+\begin{equation}
+    k(\mathbf{x}, \mathbf{x'}) = \sigma^2 \exp{\left(- \frac{1}{2}\frac{\norm{\mathbf{x} -
+    \mathbf{x'}}^2}{l^2}\right)}
+\end{equation}
+
+with the parameters $\sigma^2$ (model variance) and $l$ (lengthscale).
+with the model variance $\sigma^2$ and lengthscale $l$ as parameters.
+
+The lengthscale indicates how fast the correlation diminishes as the two points
+get further apart from each other.
+
+This function can be modified to use an arbitrary positive semi-definite matrix
+$\Lambda^{-1}$.
+This will impose different weights for each combination of $\mathbf{x}$ and
+$\mathbf{x'}$'s dimensions:
+
+\begin{equation}
+    \begin{aligned}
+        k(\mathbf{x}, \mathbf{x'})
+        &= \sigma^2\exp{\left[-\frac{1}{2} (\mathbf{x} - \mathbf{x'})^T \Lambda^{-1}
+        (\mathbf{x} - \mathbf{x'})\right]} \\
+        &= \sigma^2 \exp{\left[-\frac{1}{2}\sum_{d=1}^D w_d(x_d - x'_d)^2\right]}
+    \end{aligned}
+\end{equation}
+where $w_d = \frac{1}{l_d^2}; d = 1 ,\dots, D$, with D being the dimension of the
+data.
+
+The special case of $\Lambda^{-1} = \text{diag}{\left([l_1^{-2},\dots,l_D^{-2}]\right)}$
+is equivalent to implementing different lengthscales on different regressors.
+This can be used to asses the relative importance of each regressor through the
+value of the hyperparameters. This is the \acrfull{ard} property.
+
+
+\subsubsection*{Rational Quadratic Kernel}
+
+The \acrfull{rq} Kernel can be intepreted as an infinite sum of \acrshort{se}
+kernels with different lengthscales. It has the same smooth behaviour as the
+\acrlong{se} Kernel, but can take into account the difference in function
+behaviour for large scale vs small scale variations.
+
+\begin{equation}
+    k(\mathbf{x}, \mathbf{x'}) = \sigma^2 \exp{\left(1+\frac{1}{2}\frac{\norm{\mathbf{x} -
+    \mathbf{x'}}^2}{\alpha l^2}\right)}^{-\alpha}
+\end{equation}
+
+When extended with \acrshort{ard} behaviour, it becomes:
+
+\begin{equation}
+k(\mathbf{x}, \mathbf{x'})
+= \sigma^2\exp{\left[1 + \frac{1}{2} {(\mathbf{x} - \mathbf{x'})}^T \Lambda^{-1}
+(\mathbf{x} - \mathbf{x'})\right]}^{-\alpha} \\
+\end{equation}
+
+
+
+\subsection{Extending GPs to larger datasets}
+
+There exist multiple methods of scaling \acrshort{gp}s to be used on more data,
+without inquiring the penalty of inverting the covariance matrix. An overview
+and comparison of multiple methods is given
+at~\cite{liuUnderstandingComparingScalable2019}.
+
+For the scope of this project the choice of using the \acrfull{svgp} models has
+been made, since it provides a very good balance of scalability, capability,
+robustness and controllability~\cite{liuUnderstandingComparingScalable2019}.
+
+The \acrlong{svgp} has been first introduced
+by~\textcite{hensmanGaussianProcessesBig2013} as a way to scale the use of
+\acrshort{gp}s to large datasets. A detailed explanation on the mathematics of
+\acrshort{svgp}s and reasoning behind it is given
+at~\cite{yiSparseVariationalGaussian2021}, with a very brief summary presented
+below.
+
+\subsubsection{Summarizing the training data}
+
+Trivially downsampling the available data to a size that fits within the
+computational budget is not the best solution, since it implies ignoring large
+amounts of possibly otherwise unavailable information.
+
+In order to solve the problem of reducing the dataset size without the downside
+of discarding potentially useful information, a new set of random variables
+$f(X_s)$, usually denoted as $f_s$ is introduced, with the requirement that this
+new dataset has size $n_s$  smaller than the size $n$ of the original dataset. 
+
+The $X_s$ are called \textit{inducing locations}, and $f_s$ --- \textit{inducing
+random variables}. They are said to summarize the data in the sense that a model
+trained on this new dataset should be able to generate the original dataset with
+a high probability.
+
+The multivariate Gaussian distribution is used to establish the relationship
+between $f_s$ and $f$, which will serve the role of the prior, now called the
+sparse prior:
+
+\begin{equation}
+    \begin{bmatrix}
+        \mathbf{f}(X) \\
+        \mathbf{f}(X_s) \\
+    \end{bmatrix} = 
+    \mathcal{N}\left(
+        \mathbf{0}, 
+        \begin{bmatrix}
+            K(X, X) & K(X, X_s) \\
+            K(X_s, X) & K(X_s, X_s) \\
+        \end{bmatrix}
+    \right)
+\end{equation}
+
+\subsubsection{Evidence Lower Bound}
+
+Computing the log likelihood is one of the most expensive parts of model
+training, due to inversion of the kernel matrix term ${\left(K +
+\sigma_n^2I\right)}^{-1}$ (cf. Equation~\ref{eq:gp_likelihood}) with an
+algorithmic complexity of $\mathcal{O}(n^3)$.
+
+In order to solve this problem, the log likelihood equation
+(Equation~\ref{eq:gp_log_likelihood}) used for training a
+classical \acrshort{gp} is replaced with an approximate value, that is
+computationally tractable on larger sets of data.
+
+The following derivation of the \acrshort{elbo} is based on the one presented
+in~\cite{yangUnderstandingVariationalLower}.
+
+Assume $X$ to be the observations, and $Z$ the set of hidden (latent)
+variables --- the parameters of the \acrshort{gp} model. The posterior
+distribution of the hidden variables can be written as follows:
+
+\begin{equation}
+    p(Z|X) = \frac{p(X|Z)p(Z)}{p(X)} = \frac{p(X|Z)p(Z)}{\int_Z p(X,Z)}
+\end{equation}
+
+The main idea of Variational Bayesian methods is to replace the true posterior
+distribution $p(Z|X)$ with an approximation $q(Z)$ that is easier to compute,
+but is as close as possible to the original. 
+
+One measure of the closeness of the two distributions is the \acrfull{kl}
+divergence, which for variational inference takes the following form:
+
+
+\vspace{5pt}
+\begin{equation}
+    \begin{aligned}
+        KL\left[q(Z)||p(Z|X)\right] 
+        &= \int_Z q(Z)\log{\left(\frac{q(Z)}{p(Z|X)}\right)} \\
+        &= - \int_Z q(Z)\log{\left(\frac{q(Z|X)}{p(Z)}\right)} \\
+        &= - \left(
+                \int_Z q(Z)\log{\left(\frac{p(X,Z)}{q(Z)}\right)}
+                        - \int_Z q(Z)\log{\left(p(X)\right)}
+            \right) \\
+        &= - \int_Z q(Z) \log{\left(\frac{p(X,Z)}{q(Z)}\right)}
+            + \log{\left(p(X)\right)}\int_Z q(Z) \\
+        &= -L + \log{\left(p(X)\right)} \\
+    \end{aligned}
+\end{equation}
+\vspace{5pt}
+
+where L is the \acrfull{elbo}. Rearranging this equation we get: 
+
+\begin{equation}
+    L = \log{\left(p(X)\right)} - KL\left[q(Z)||p(Z|X)\right] 
+\end{equation}
+
+Since KL is always $\geq 0$, we get that $L \leq \log{\left(p(X)\right)}$ is a
+lower bound of the log probability of observations.
+
+\subsection{Gaussian Process Models for Dynamical
+Systems}\label{sec:gp_dynamical_system}
+
+In the context of Dynamical Systems Identification and Control, Gaussian
+Processes are used to represent multiple different model structures, ranging
+from state space and \acrshort{nfir} structures, to the more complex
+\acrshort{narx}, \acrshort{noe} and \acrshort{narmax}. 
+
+
+The general form of an \acrfull{narx} model is as follows:
+
+\begin{equation}
+    \hat{y}(k) =
+    f(w(k-1),\dots,w(k-l_w),y(k-1),\dots,y(k-l_y),u(k-1),\dots,u(k-l_u))
+\end{equation}
+
+where w are the exogenous inputs with a maximum lag of $l_w$, u are the model
+inputs with a maximum lag of $l_u$, and y are the model outputs with a maximum
+lag of $l_y$. This structure is a prediction model, since it uses the measured
+values of y as regressors.
+
+The \acrfull{noe} uses the past predictions $\hat{y}$ for future predictions:
+
+\begin{equation}
+    \hat{y}(k) =
+    f(w(k-1),\dots,w(k-l_w),\hat{y}(k-1),\dots,\hat{y}(k-l_y),u(k-1),\dots,u(k-l_u))
+\end{equation}
+
+The \acrshort{noe} structure is therefore a \textit{simulation model}.
+
+In order to get the best simulation results from a \acrshort{gp} model, the
+\acrshort{noe} structure would have to be employed. Due to the high algorithmic
+complexity of training and evaluating \acrshort{gp} models, this approach is
+computationally untractable. In practice a \acrshort{narx} model will be trained,
+which will be validated through multi-step ahead prediction.
 
 \clearpage

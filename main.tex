@@ -16,10 +16,17 @@
 \usepackage[T1]{fontenc}
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage{libertinus} % Use font of arbitrary sizes 
+                        % (removes bibliography font warning)
 \usepackage{csquotes} % Removes a compilation warning
 \usepackage{changepage}
 
 \usepackage{lipsum}
+\usepackage[acronym]{glossaries}
+
+\makenoidxglossaries
+\loadglsentries[acronym]{glossaries.tex}
+
 
 %SI Package
 \usepackage[binary-units=true]{siunitx}
@@ -39,7 +46,14 @@
 \usepackage{mathtools}
 \usepackage{textcomp} %defines \perthousand and \micro for gensymb
 \usepackage{gensymb} %math in text
-\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\usepackage[unicode=true,pdfusetitle,
+   bookmarks=true,
+   bookmarksnumbered=false,
+   bookmarksopen=false,
+   breaklinks=false,
+   pdfborder={0 0 1},
+   backref=false,
+   colorlinks=false]{hyperref}
 %\usepackage[colorinlistoftodos]{todonotes}
 %\usepackage[colorlinks=true, allcolors=black]{hyperref}
 
@@ -96,12 +110,19 @@
 \setlength\parindent{0pt}
 
 
+% Define new user commands
+\newcommand{\pdome}{Polyd\^ome}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+
 \begin{document}
 \selectlanguage{english}
 
 \input{00_First_Page.tex}
 
 \tableofcontents
+\clearpage
+
+\printnoidxglossary[type=\acronymtype]
 \clearpage
 
 \input{10_Introduction.tex}
@@ -114,4 +135,5 @@
 \input{80_Results.tex}
 \input{90_Further_Research.tex}
 \input{95_Conclusion.tex}
+\printbibliography
 \end{document}
