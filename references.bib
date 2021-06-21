@@ -238,6 +238,22 @@
   langid = {english}
 }
 
+@article{kabzanLearningBasedModelPredictive2019,
+  title = {Learning-{{Based Model Predictive Control}} for {{Autonomous Racing}}},
+  author = {Kabzan, Juraj and Hewing, Lukas and Liniger, Alexander and Zeilinger, Melanie N.},
+  date = {2019-10},
+  journaltitle = {IEEE Robotics and Automation Letters},
+  volume = {4},
+  pages = {3363--3370},
+  issn = {2377-3766},
+  doi = {10.1109/LRA.2019.2926677},
+  abstract = {In this letter, we present a learning-based control approach for autonomous racing with an application to the AMZ Driverless race car gotthard. One major issue in autonomous racing is that accurate vehicle models that cover the entire performance envelope of a race car are highly nonlinear, complex, and complicated to identify, rendering them impractical for control. To address this issue, we employ a relatively simple nominal vehicle model, which is improved based on measurement data and tools from machine learning.The resulting formulation is an online learning data-driven model predictive controller, which uses Gaussian processes regression to take residual model uncertainty into account and achieve safe driving behavior. To improve the vehicle model online, we select from a constant in-flow of data points according to a criterion reflecting the information gain, and maintain a small dictionary of 300 data points. The framework is tested on the full-size AMZ Driverless race car, where it is able to improve the vehicle model and reduce lap times by \$ \textbackslash mathbf10\%\$ while maintaining safety of the vehicle.},
+  eventtitle = {{{IEEE Robotics}} and {{Automation Letters}}},
+  file = {/home/radu/Zotero/storage/CUJ9MGH7/Kabzan et al. - 2019 - Learning-Based Model Predictive Control for Autono.pdf;/home/radu/Zotero/storage/77YZEZQB/8754713.html},
+  keywords = {Adaptive systems,autonomous racing,Autonomous vehicles,learning and adaptive systems,Learning systems,Model learning for control,model predictive control,Predictive control,Vehicle dynamics},
+  number = {4}
+}
+
 @online{KernelCookbooka,
   title = {Kernel {{Cookbook}}},
   url = {https://www.cs.toronto.edu/~duvenaud/cookbook/},
@@ -264,6 +280,26 @@
   file = {/home/radu/Zotero/storage/YW9S25QI/Kocijan - 2016 - Modelling and Control of Dynamic Systems Using Gau.pdf},
   isbn = {978-3-319-21020-9 978-3-319-21021-6},
   series = {Advances in {{Industrial Control}}}
+}
+
+@article{liuExperimentalAnalysisSimulated2006,
+  title = {Experimental Analysis of Simulated Reinforcement Learning Control for Active and Passive Building Thermal Storage Inventory: {{Part}} 2: {{Results}} and Analysis},
+  shorttitle = {Experimental Analysis of Simulated Reinforcement Learning Control for Active and Passive Building Thermal Storage Inventory},
+  author = {Liu, Simeng and Henze, Gregor P.},
+  date = {2006-02-01},
+  journaltitle = {Energy and Buildings},
+  shortjournal = {Energy and Buildings},
+  volume = {38},
+  pages = {148--161},
+  issn = {0378-7788},
+  doi = {10.1016/j.enbuild.2005.06.001},
+  url = {https://www.sciencedirect.com/science/article/pii/S0378778805000861},
+  urldate = {2021-06-20},
+  abstract = {This paper is the second part of a two-part investigation of a novel approach to optimally control commercial building passive and active thermal storage inventory. The proposed building control approach is based on simulated reinforcement learning, which is a hybrid control scheme that combines features of model-based optimal control and model-free learning control. An experimental study was carried out to analyze the performance of a hybrid controller installed in a full-scale laboratory facility. The first paper introduced the theoretical foundation of this investigation including the fundamental theory of reinforcement learning control. This companion paper presents a discussion and analysis of the experiment results. The results confirm the feasibility of the proposed control approach. Operating cost savings were attained with the proposed control approach compared with conventional building control; however, the savings are lower than for the case of model-based predictive optimal control As for the case of model-based predictive control, the performance of the hybrid controller is largely affected by the quality of the training model, and extensive real-time learning is required for the learning controller to eliminate any false cues it receives during the initial training period. Nevertheless, compared with standard reinforcement learning, the proposed hybrid controller is much more readily implemented in a commercial building.},
+  file = {/home/radu/Zotero/storage/S7QXQJVH/Liu and Henze - 2006 - Experimental analysis of simulated reinforcement l.pdf;/home/radu/Zotero/storage/I3GBEBHA/S0378778805000861.html},
+  keywords = {Learning control,Load shifting,Optimal control,Reinforcement learning,Thermal Energy Storage (TES)},
+  langid = {english},
+  number = {2}
 }
 
 @article{liuUnderstandingComparingScalable2019,
@@ -447,6 +483,35 @@
   file = {/home/radu/Zotero/storage/BIWB8N2V/sparse-and-variational-gaussian-process-what-to-do-when-data-is-large-2d3959f430e7.html},
   langid = {english},
   organization = {{Medium}}
+}
+
+@online{zengAdaptiveMPCScheme2021,
+  title = {An Adaptive {{MPC}} Scheme for Energy-Efficient Control of Building {{HVAC}} Systems},
+  author = {Zeng, Tingting and Barooah, Prabir},
+  date = {2021-02-07},
+  url = {http://arxiv.org/abs/2102.03856},
+  urldate = {2021-06-20},
+  abstract = {An autonomous adaptive MPC architecture is presented for control of heating, ventilation and air condition (HVAC) systems to maintain indoor temperature while reducing energy use. Although equipment use and occupant changes with time, existing MPC methods are not capable of automatically relearning models and computing control decisions reliably for extended periods without intervention from a human expert. We seek to address this weakness. Two major features are embedded in the proposed architecture to enable autonomy: (i) a system identification algorithm from our prior work that periodically re-learns building dynamics and unmeasured internal heat loads from data without requiring re-tuning by experts. The estimated model is guaranteed to be stable and has desirable physical properties irrespective of the data; (ii) an MPC planner with a convex approximation of the original nonconvex problem. The planner uses a descent and convergent method, with the underlying optimization problem being feasible and convex. A year long simulation with a realistic plant shows that both of the features of the proposed architecture - periodic model and disturbance update and convexification of the planning problem - are essential to get the performance improvement over a commonly used baseline controller. Without these features, though MPC can outperform the baseline controller in certain situations, the benefits may not be substantial enough to warrant the investment in MPC.},
+  archiveprefix = {arXiv},
+  eprint = {2102.03856},
+  eprinttype = {arxiv},
+  file = {/home/radu/Zotero/storage/5DGTWGXU/Zeng and Barooah - 2021 - An adaptive MPC scheme for energy-efficient contro.pdf;/home/radu/Zotero/storage/TYEAZ4EJ/2102.html},
+  keywords = {Electrical Engineering and Systems Science - Systems and Control},
+  primaryclass = {cs, eess},
+  version = {1}
+}
+
+@inproceedings{zengAutonomousMPCScheme2020,
+  title = {An Autonomous {{MPC}} Scheme for Energy-Efficient Control of Building {{HVAC}} Systems},
+  booktitle = {2020 {{American Control Conference}} ({{ACC}})},
+  author = {Zeng, Tingting and Barooah, Prabir},
+  date = {2020-07},
+  pages = {4213--4218},
+  issn = {2378-5861},
+  doi = {10.23919/ACC45564.2020.9147753},
+  abstract = {Model Predictive Control (MPC) is a promising technique for energy efficient control of Heating, Ventilation, and Air Conditioning (HVAC) systems. However, the need for human involvement limits current MPC strategies from widespread deployment, since (i) model identification algorithms require re-tuning of hyper-parameters, and (ii) optimizers may fail to converge within the available control computation time, or get stuck in a local minimum. In this work we propose an autonomous MPC scheme to overcome these issues. Two major features are embedded in this architecture to enable autonomy: (i) a convex identification algorithm with adaptation to time-varying building dynamics, and (ii) a convex optimizer. The model identification algorithm re-runs periodically so as to handle changes in the building's dynamics. The estimated model is guaranteed to be stable and has desirable physical properties. The optimizer uses a descent and convergent algorithm, with the underlying optimization problem being feasible and convex. Numerical results show that the proposed convex formulation is more reliable in control computation compared to the nonconvex one, and the proposed autonomous MPC architecture reduces energy consumption significantly over a conventional controller.},
+  eventtitle = {2020 {{American Control Conference}} ({{ACC}})},
+  keywords = {Adaptation models,Architecture,Atmospheric modeling,Buildings,Computational modeling,Computer architecture,Heuristic algorithms}
 }
 
 
