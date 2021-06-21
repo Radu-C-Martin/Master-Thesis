@@ -1,5 +1,14 @@
 \section{Implementation}
 
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width = 0.5\textwidth]{Images/setup_diagram.pdf}
+    \caption{Block diagram of the Simulink plant and Python Controller}
+    \label{fig:setup_diagram}
+\end{figure}
+
+
 % TODO: [Implementation] Reference implementation details for CARNOT and WDB
 
 \subsection{Gaussian Processes}
@@ -12,10 +21,7 @@
 
 
 \subsection{Optimal Control Problem}
-% TODO: [Implementation] Cite CasADi
-% TODO: [Implementation] Cite HSL solvers for using MA27
-
-\subsection{Sparse Implementation of the Optimization Problem}
+\subsubsection{Sparse Implementation of the Optimization Problem}
 
 The optimization problem as presented in
 Equation~\ref{eq:optimal_control_problem} becomes very nonlinear quite fast. In
@@ -47,6 +53,11 @@ $\mathbf{w}$, $\mathbf{u}$, $\mathbf{y}$ (cf. Equation~\ref{eq:components}).
 
 where X is the matrix of all the system states and W is the matrix of the
 disturbances.
+
+\subsubsection{RENAME: Python implementation of the control problem}
+% TODO: [Implementation] Cite CasADi
+% TODO: [Implementation] Cite HSL solvers for using MA27
+
 
 \subsection{Python server and controller objects}
 
