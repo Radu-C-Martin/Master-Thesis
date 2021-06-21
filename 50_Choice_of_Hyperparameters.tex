@@ -348,6 +348,8 @@ being cheaper from a computational perspective. In order to make a more informed
 choice for the best hyperparamerers, the performance of all three combinations
 has been analysed.
 
+\clearpage
+
 \begin{table}[ht]
 %\vspace{-8pt}
 \centering
@@ -384,24 +386,21 @@ therefore been chosen as the model for the full year simulations.
 
 % TODO: [Hyperparameters] Validation of hyperparameters
 
-The validation of model parameters has the dual purpose of 
+The validation step has the purpose of testing the fiability of the trained
+models. If choosing a model according to loss function values on a new dataset
+is a way of minimizing the possibility of overfitting the model to the training
+data, validating the model by analyzing its multi-step prediction performance
+ensures the model was able to learn the correct dynamics and is useful in
+simulation scenarios.
 
+The following subsections analyze the performance of the trained \arcshort{gp}
+and \acrshort{svgp} models over 20-step ahead predictions. For the \acrshort{gp}
+model the final choice of parameters is made according to the simulation
+performance. The simulation performance of the \acrshort{svgp} model is compared
+to that of the classical models while speculating on the possible reasons for
+the discrepancies.
 
 \subsubsection{Conventional Gaussian Process}
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width = \textwidth]{Plots/GP_113_training_performance.pdf}
-    \caption{}
-    \label{fig:GP_train_validation}
-\end{figure}
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width = \textwidth]{Plots/GP_113_test_performance.pdf}
-    \caption{}
-    \label{fig:GP_test_validation}
-\end{figure}
 
 
 \begin{figure}[ht]
@@ -412,23 +411,39 @@ The validation of model parameters has the dual purpose of
     \label{fig:GP_multistep_validation}
 \end{figure}
 
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width =
+    \textwidth]{Plots/GP_213_-1pts_test_prediction_20_steps.pdf}
+    \caption{}
+    \label{fig:GP_213_multistep_validation}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width =
+    \textwidth]{Plots/GP_313_-1pts_test_prediction_20_steps.pdf}
+    \caption{}
+    \label{fig:GP_313_multistep_validation}
+\end{figure}
+
 \clearpage
 
 \subsubsection{Sparse and Variational Gaussian Process}
 
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width = \textwidth]{Plots/SVGP_123_training_performance.pdf}
-    \caption{}
-    \label{fig:SVGP_train_validation}
-\end{figure}
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width = \textwidth]{Plots/SVGP_123_test_performance.pdf}
-    \caption{}
-    \label{fig:SVGP_test_validation}
-\end{figure}
+%\begin{figure}[ht]
+%    \centering
+%    \includegraphics[width = \textwidth]{Plots/SVGP_123_training_performance.pdf}
+%    \caption{}
+%    \label{fig:SVGP_train_validation}
+%\end{figure}
+%
+%\begin{figure}[ht]
+%    \centering
+%    \includegraphics[width = \textwidth]{Plots/SVGP_123_test_performance.pdf}
+%    \caption{}
+%    \label{fig:SVGP_test_validation}
+%\end{figure}
 
 \begin{figure}[ht]
     \centering

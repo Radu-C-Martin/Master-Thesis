@@ -20,20 +20,16 @@ in the \acrshort{wdb} object is given in Section~\ref{sec:CARNOT_WDB}.
 
 \subsection{Simulink Model}
 
-
-% TODO: [Implementation] Move the simulink schema here, with explanations of tcp
-
-The final Simulink schema is presented in Figure~\ref{fig:CARNOT_complete}:
+The secondary functions of the Simulink model is the weather prediction, as well
+as communication with the Python controller. A complete schema of the Simulink
+setup is presented in Figure~\ref{fig:Simulink_complete}.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width = \textwidth]{Images/polydome_python.pdf}
+    \includegraphics[width = 0.75\textwidth]{Images/polydome_python.pdf}
     \caption{Simulink Schema of the Complete Simulation}
     \label{fig:Simulink_complete}
 \end{figure}
-
-The secondary functions of the Simulink model is the weather prediction, as well
-as communication with the Python controller.
 
 The communication between Simulink and the controller is done using three
 separate TCP/IP sockets: one for sending the control signal, one for reading the
@@ -185,5 +181,20 @@ delegates which controller is active, is responsible for training and updating
 the \acrshort{gp} and \acrshort{svgp} models, as well as keeping track of all
 the intermediate results for analysis.
 
+In the beginning of the experiment there is no information available on the
+building's thermal behaviour. For this part of the simulation, the controller
+switches to a \acrshort{pi} controller until it gathers enough data to train a
+\acrshort{gp} model. The signal is then disturbed by a random signal before
+being applied to the CARNOT building. This ensured that the building is
+sufficiently excited to capture its dynamics, while maintaining the
+temperature within an acceptable range (~15 --- 25 $\degree$C).
+
+Once enough data has been captured, the Python controller trains the
+\acrshort{gp} model and switches to tracking the appropriate SIA 180:2014
+reference temperature (cf. Section~\ref{sec:reference_temperature}).
+
+For the case of the \acrshort{svgp}, a new model is trained once enough data is
+gathered. The implementations tested were updated once a day, either on the
+whole historical set of data, or on a window of the last five days of data.
 
 \clearpage
