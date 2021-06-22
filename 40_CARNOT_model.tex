@@ -33,21 +33,8 @@ The Simulink model is then completed by adding a \textit{Weather Data File}
 containing weather measurements for a whole year, and a \textit{Weather
 Prediction} block responsible for sending weather predictions to the MPC.\@ The
 controller itself is defined in Python and is connected to Simulink via three
-TCP/IP sockets: one for sending the control signal, one for reading the
-temperature measurement, and one for reading the weather forecast.
-
-The final Simulink schema is presented in Figure~\ref{fig:CARNOT_complete}:
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width = \textwidth]{Images/polydome_python.pdf}
-    \caption{Simulink Schema of the Complete Simulation}
-    \label{fig:CARNOT_complete}
-\end{figure}
-
-% TODO: [CARNOT] Redo this part
-
-\clearpage
+TCP/IP sockets. Details on the implementation are presented in
+Section~\ref{sec:implementation}.
 
 \subsection{Physical dimensions}\label{sec:Physical_dimensions}
 
