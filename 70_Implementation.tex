@@ -42,8 +42,8 @@ communicate over TCP, these elements can all be implemented completely
 separately, which is much more similar to a real-life implementation.
 
 With this structure, the only information received and sent by the Python
-controller is the actual sampled data, without any additional information. And
-while the controller needs information on the control horizon in order to read
+controller is the actual sampled data, without any additional information.
+While the controller needs information on the control horizon in order to read
 the correct amount of data for the weather predictions and to properly generate
 the optimization problem, the discrete/continuous transition and vice-versa
 happens on the Simulink side. This simplifies the adjustment of the sampling
@@ -54,10 +54,10 @@ The weather prediction is done using the information present in the CARNOT
 \acrshort{wdb} object. Since the sampling time and control horizon of the
 controller can be adjusted, the required weather predictions can lie within an
 arbitrary time interval. At each sampling point, the weather measurements are
-linearly interpolated for the span of time ranging from the most recent
-measurement to the next measurement after the last required prediction time.
-This provides a better approximation that pure linear interpolation over the
-starting and ending points, while retaining a simple implementation.
+piece-wise linearly interpolated for the span of time ranging from the most
+recent measurement to the next measurement after the last required prediction
+time.  This provides a better approximation than pure linear interpolation over
+the starting and ending points, while retaining a simple implementation.
 
 \subsection{Gaussian Processes}
 
@@ -67,11 +67,11 @@ This means that naive implementations can get too expensive in terms of
 computation time very quickly.
 
 In order to have as smallest of a bottleneck as possible when dealing with
-\acrshort{gp}s, a very optimized implementation of \acrlong{gp} Models was
-used, in the form of GPflow~\cite{matthewsGPflowGaussianProcess2017}. It is
-based on TensorFlow~\cite{tensorflow2015-whitepaper}, which has very efficient
-implementation of all the necessary Linear Algebra operations. Another benefit of
-this implementation is the very simple use of any additional computational
+\acrshort{gp}s, a very fast implementation of \acrlong{gp} Models was used, in
+the form of GPflow~\cite{matthewsGPflowGaussianProcess2017}. It is based on
+TensorFlow~\cite{tensorflow2015-whitepaper}, which has very efficient
+implementation of all the necessary Linear Algebra operations. Another benefit
+of this implementation is the very simple use of any additional computational
 resources, such as a GPU, TPU, etc.
 
 \subsubsection{Classical Gaussian Process training}
@@ -129,8 +129,8 @@ number of function calls by around an order of magnitude, which already
 drastically reduces computation time.
 
 Another significant speed improvement comes from transforming the Python calls
-to TensofFlow into native tf-functions. This change incurs a small overhead the
-first time the optimization problem is run since all the TensorFlow functions
+to TensorFlow into native tf-functions. This change incurs a small overhead the
+first time the optimization problem is run, since all the TensorFlow functions
 have to be compiled before execution, but afterwards speeds up the execution by
 around another order of magnitude.
 
@@ -148,7 +148,7 @@ Equation~\ref{eq:optimal_control_problem} becomes very nonlinear quite fast. In
 fact, due to the autoregressive structure of the \acrshort{gp}, the predicted
 temperature at time t is passed as an input to the model at time $t+1$. A simple
 recursive implementation of the Optimization Problem becomes intractable after
-only 3 --- 4 prediction steps. 
+only 3~---~4 prediction steps. 
 
 In order to solve this problem, a new OCP is introduced. It has a much sparser
 structure, in exchange for a larger number of variables. This turns out to be
@@ -183,20 +183,19 @@ the intermediate results for analysis.
 
 In the beginning of the experiment there is no information available on the
 building's thermal behaviour. For this part of the simulation, the controller
-switches to a \acrshort{pi} controller until it gathers enough data to train a
-\acrshort{gp} model. The signal is then disturbed by a random signal before
-being applied to the CARNOT building. This ensured that the building is
-sufficiently excited to capture its dynamics, while maintaining the
-temperature within an acceptable range (~15 --- 25 $\degree$C).
+switches to a \acrshort{pi} controller with random disturbances until it gathers
+enough data to train a \acrshort{gp} model. This ensured that the building is
+sufficiently excited to capture its dynamics, while maintaining the temperature
+within an acceptable range (~15 --- 25 $\degree$C).
 
-Once enough data has been captured, the Python controller trains the
-\acrshort{gp} model and switches to tracking the appropriate SIA 180:2014
-reference temperature (cf. Section~\ref{sec:reference_temperature}).
+Once enough data has been captured all the features are first scaled to the
+range [-1, 1] in order to reduce the possibility of numerical instabilities. The
+Python controller then trains the \acrshort{gp} model and switches to tracking
+the appropriate SIA 180:2014 reference temperature (cf.
+Section~\ref{sec:reference_temperature}).
 
 For the case of the \acrshort{svgp}, a new model is trained once enough data is
 gathered. The implementations tested were updated once a day, either on the
 whole historical set of data, or on a window of the last five days of data.
-
-% TODO [Implementation] Add info on scaling
 
 \clearpage

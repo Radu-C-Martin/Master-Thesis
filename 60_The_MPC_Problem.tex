@@ -25,10 +25,11 @@ The optimization problem is therefore defined as follows:
     \end{align}
 \end{subequations}
 
-where $y_{ref, t}$ is the reference temperature at time t, $\mathbf{x}_{t}$ is
-the GP input vector at time t, composed of the exogenous autoregressive inputs
-$\mathbf{w}_{t}$, the autoregressive controlled inputs $\mathbf{u}_{t}$ and the
-autoregressive outputs $\mathbf{y}_{t}$.
+where $y_{ref, t}$ is the reference temperature at time t, $\mathcal{U}$ is the
+set of allowed inputs, $\mathbf{x}_{t}$ is the GP input vector at time t,
+composed of the exogenous autoregressive inputs $\mathbf{w}_{t}$, the
+autoregressive controlled inputs $\mathbf{u}_{t}$ and the autoregressive outputs
+$\mathbf{y}_{t}$.
 
 \subsection{Temperature reference}\label{sec:reference_temperature}
 

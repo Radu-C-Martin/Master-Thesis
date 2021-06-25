@@ -84,7 +84,7 @@ which, for the rest of the section, will be used in the abbreviated form:
 
 "Training" a \acrshort{gp} is the process of finding the kernel parameters that
 best explain the data. This is done by maximizing the probability density
-function for the observations $y$i, also known as the marginal likelihood:
+function for the observations $y$, also known as the marginal likelihood:
 
 \begin{equation}\label{eq:gp_likelihood}
     p(y) = \frac{1}{\sqrt{(2\pi)^{n}\det{\left(K + \sigma_n^2I\right)}}}
@@ -109,6 +109,9 @@ marginal likelihood:
 
 \subsection{Prediction}
 
+Given the proper covariance matrices $K$ and $K_*$, predictions on new points
+can be made as follows:
+
 \begin{equation}
     \begin{aligned}
         \mathbf{f_*} = \mathbb{E}\left(f_*|X, \mathbf{y}, X_*\right) &=
@@ -117,9 +120,9 @@ marginal likelihood:
     \end{aligned}
 \end{equation}
 
-
-Apply the zero mean \acrshort{gp} to the \textit{difference} between the
-observations and the fixed mean function:
+The extensions of these predictions to a non-zero mean \acrshort{gp} comes
+naturally by applying the zero mean \acrshort{gp} to the \textit{difference}
+between the observations and the fixed mean function:
 
 \begin{equation}
     \bar{\mathbf{f}}_* = \mathbf{m}(X_*) + K_*\left(K + 
@@ -310,9 +313,9 @@ lower bound of the log probability of observations.
 Systems}\label{sec:gp_dynamical_system}
 
 In the context of Dynamical Systems Identification and Control, Gaussian
-Processes are used to represent multiple different model structures, ranging
-from state space and \acrshort{nfir} structures, to the more complex
-\acrshort{narx}, \acrshort{noe} and \acrshort{narmax}. 
+Processes are used to represent different model structures, ranging from state
+space and \acrshort{nfir} structures, to the more complex \acrshort{narx},
+\acrshort{noe} and \acrshort{narmax}. 
 
 
 The general form of an \acrfull{narx} model is as follows:

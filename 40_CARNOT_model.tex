@@ -4,7 +4,7 @@ In order to better analyze the different model training and update methods it
 was decided to replace the physical \pdome\ building with a computer model.
 This allows for faster-than-real-time simulations, as well as perfectly
 reproducing the weather conditions and building response for direct comparison
-of different control schemes over long periods of time.
+of different control schemes over longer periods of time.
 
 The model is designed using the CARNOT
 toolbox~\cite{lohmannEinfuehrungSoftwareMATLAB} for Simulink. It is based on the
@@ -29,7 +29,7 @@ the choice of all the necessary model parameters.
 
 \clearpage
 
-The Simulink model is then completed by adding a \textit{Weather Data File}
+Finally, the  Simulink model is completed by adding a \textit{Weather Data File}
 containing weather measurements for a whole year, and a \textit{Weather
 Prediction} block responsible for sending weather predictions to the MPC.\@ The
 controller itself is defined in Python and is connected to Simulink via three
@@ -56,7 +56,8 @@ skylights are measured to be squares of edge 2.5m.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width = 0.8\textwidth]{Images/google_maps_polydome_skylights}
+    \vspace{-10pt}
+    \includegraphics[width = 0.75\textwidth]{Images/google_maps_polydome_skylights}
     \caption{Google Maps Satellite view of the \pdome\ building}
     \label{fig:Google_Maps_Skylights}
 \end{figure}
@@ -70,9 +71,11 @@ as reference, after which the following measurements have been done in
 \citetitle{kimballGIMPGNUImage}~\cite{kimballGIMPGNUImage} using the
 \textit{Measure Tool}.
 
-The chosen reference object is the \pdome\ HVAC system, the full description of
-which is presented in Section~\ref{sec:HVAC_parameters}, and which has a known
-height of 2061mm \cite{aermecRoofTopManuelSelection}.
+The chosen reference object is the \pdome\ \acrshort{hvac} system, the full
+description of which is presented in Section~\ref{sec:HVAC_parameters}, and
+which has a known height of 2061mm \cite{aermecRoofTopManuelSelection}.
+
+\clearpage
 
 \begin{figure}[ht]
     \centering
@@ -91,7 +94,7 @@ Table~\ref{tab:GIMP_measurements}:
         \hline
         Object & Size [px] & Size[mm] & Size[m]\\
         \hline \hline
-        HVAC height & 70 & 2100 & 2.1 \\
+        acrshort{hvac} height & 70 & 2100 & 2.1 \\
         Building height & 230 & 6900 & 6.9 \\
         Stem wall & 45 & 1350 & 1.35 \\
         Dome height & 185 & 5550 & 5.55 \\
@@ -121,7 +124,7 @@ the model:
 
 The \pdome\ building has a structure that is mostly based on a dome shape, with
 the difference that the dome portion of the building does not reach the ground,
-but stands above it at a height of $\approx 1.35m$ (cf.
+but stands above it at a height of approximately $1.35$m (cf.
 Table~\ref{tab:GIMP_measurements}), with the large side windows extending to the
 ground and creating a \textit{stem wall} for the dome to sit on.
 
@@ -177,7 +180,7 @@ therefore be calculated as:
 The total volume of the building is then given as: 
 
 \begin{equation}
-    V = V_d + V_s = \frac{1}{6} \pi h (3r^2 + h^2) + l_s^2
+    V = V_d + V_s = \frac{1}{6} \pi h (3r^2 + h^2) + l_s^2 * h_s
 \end{equation}
 
 Numerically, considering a dome diameter of 28m, a dome height of 5.55m and a stem
@@ -187,7 +190,7 @@ wall edge of 25m, we get the approximate volume of the building:
 \end{equation}
 
 The value presented in Equation~\ref{eq:numerical_volume} is used directly in
-the \textit{room\_node} of the CARNOT model (cf.
+the \textit{room\_node} element of the CARNOT model (cf.
 Figure~\ref{fig:CARNOT_polydome}), as well as the calculation of the Air
 Exchange Rate, presented in Section~\ref{sec:Air_Exchange_Rate}.
 
@@ -205,15 +208,15 @@ the chairs, tables, etc.\ but due to the restricted access to the building a
 simpler approximation has been made.
 
 \textcite{johraNumericalAnalysisImpact2017} present a methodology to model the
-furniture in buildings for multiple different materials, as well as an
-\textit{equivalent indoor content material} that is meant to approximate the
-furniture content of an office building. These values for mass content, surface
-area, material density and thermal conductivity have been taken as the basis for
-the \pdome\ furniture content approximation, with the assumption that, since the
-\pdome\ is still mostly empty, it has approximately a quarter of the furniture
-present in a fully furnished office.
+furniture in buildings for different materials, as well as an \textit{equivalent
+indoor content material} that is meant to approximate the furniture content of
+an office building. These values for mass content, surface area, material
+density and thermal conductivity have been taken as the basis for the \pdome\
+furniture content approximation, with the assumption that, since the \pdome\ is
+still mostly empty, it has approximately a quarter of the furniture present in a
+fully furnished office.
 
-The full set of furniture is therefore approximated in the CARNOT model as a
+The full set of furniture is, therefore, approximated in the CARNOT model as a
 wall, with the numerical values for mass, surface, thickness and volume
 presented below.
 
@@ -222,11 +225,11 @@ presented below.
 % 1/4 * 1.8 [m2/m2 of floor space] * 625 m2 surface = 140 m2
 % 140 m2 = [7 20] m [height width]
 
-The equivalent material is taken to have a surface of 1.8 $m^2$ per each $m^2$
-of floor area~\cite{johraNumericalAnalysisImpact2017}. With a floor area of 625
-$m^2$, and assuming the furnishing of the building is a quarter that of a
-fully-furnished office, the \pdome\ furniture equivalent wall has a surface area
-of:
+The equivalent material is taken to have a surface of 1.8 $\text{m}^2$ per each
+$\text{m}^2$ of floor area~\cite{johraNumericalAnalysisImpact2017}. With a floor
+area of 625 $\text{m}^2$, and assuming the furnishing of the building is a
+quarter that of a fully-furnished office, the \pdome\ furniture equivalent wall
+has a surface area of:
 
 \begin{equation}
     S_f = \frac{1}{4} \cdot 1.8 \left[\frac{\text{m}^2}{\text{m}^2}\right]
@@ -238,7 +241,8 @@ of:
 % 1/4 * 40 [kg/m2 of floor space] * 625 m2 surface = 6250 kg
 
 The mass of the furniture equivalent wall is computed using the same
-methodology, considering 40 kg of furniture mass per $m^2$ of floor surface.
+methodology, considering 40 kg of furniture mass per $\text{m}^2$ of floor
+surface.
 
 \begin{equation}
     M_f = \frac{1}{4} \cdot 40 \cdot 625\ \left[\text{m}^2\right] = 6250\
@@ -273,9 +277,9 @@ volume by the surface:
 
 \subsection{Material properties}
 
-In order to better simulate the behaviour of the real \pdome\ building it is
+In order to better simulate the behaviour of the real \pdome\ building, it is
 necessary to approximate the building materials and their properties as close as
-possible. This section goes into the details and arguments for the choice of
+possible. This section goes into details and arguments for the choice of
 parameters for each of the CARNOT nodes' properties.
 
 \subsubsection{Windows}
@@ -293,7 +297,7 @@ models~\cite{WhatAreTypical2018}.
 
 The US Energy Department states that the
 typical U-factor values for modern window installations is in the range of 0.2
---- 1.2 \(\frac{W}{m^2K}\)\cite{GuideEnergyEfficientWindows}. 
+--- 1.2 \(\frac{W}{m^2K}\)~\cite{GuideEnergyEfficientWindows}. 
 
 The European flat glass association claims that the maximum allowable U-factor
 value for new window installations in the private sector buildings in
@@ -320,8 +324,8 @@ values of 2500 \(\frac{kg}{m^3}\) and 1008 \(\frac{J}{kgK}\) respectively.
 % Heat capacity for each material
 % Density for each material
 
-The roof structure has been assumed to be made out of 10cm of insulation,
-enclosed on each side by 5cm of wood.
+The roof structure has been assumed to be made out of 10 cm of insulation,
+enclosed on each side by 5 cm of wood.
 
 %%% Floor
 % [5cm wood, 10cm insulation, 20cm concrete]
@@ -329,8 +333,8 @@ enclosed on each side by 5cm of wood.
 % Heat capacity for each material
 % Density for each material
 
-The floor composition has been taken as consisting of, from top to bottom, 5cm
-wood, 10cm insulation followed by 20cm of concrete. 
+The floor composition has been taken as consisting of, from top to bottom, 5 cm
+wood, 10 cm insulation followed by 20 cm of concrete. 
 
 All the necessary values to characterise these materials have been taken
 from~\cite{BuildingsHeatTransferData} and are presented in
@@ -356,22 +360,22 @@ Table~\ref{tab:material_properties}:
 
 \subsection{HVAC parameters}\label{sec:HVAC_parameters}
 
-The \pdome\ is equipped with an \textit{AERMEC RTY-04} HVAC system. According to
-the manufacturer's manual~\cite{aermecRoofTopManuelSelection}, this HVAC houses
-two compressors, of power 11.2 kW and 8.4 kW respectively, an external
-ventilator of power 1.67 kW, and a reflow ventilator of power 2 kW. The unit has
-a typical \acrlong{eer} (\acrshort{eer}, cooling efficiency) of 4.9 --- 5.1 and
-a \acrlong{cop} (\acrshort{cop}, heating efficiency) of 5.0, for a maximum
-cooling capacity of 64.2 kW. 
+The \pdome\ is equipped with an \textit{AERMEC RTY-04} \acrshort{hvac} system.
+According to the manufacturer's manual~\cite{aermecRoofTopManuelSelection}, this
+\acrshort{hvac} houses two compressors of power 11.2 kW and 8.4 kW respectively,
+an external ventilator of power 1.67 kW, and a reflow ventilator of power 2 kW.
+The unit has a typical \acrlong{eer} (\acrshort{eer}, cooling efficiency) of 4.9
+--- 5.1 and a \acrlong{cop} (\acrshort{cop}, heating efficiency) of 5.0, for a
+maximum cooling capacity of 64.2 kW. 
 
-One particularity of this HVAC unit is that during summer only one of the two
-compressors are running. This results in a higher \acrlong{eer}, in the cases
-where the full cooling capacity is not required.
+One particularity of this \acrshort{hvac} unit is that during summer, only one
+of the two compressors are running. This results in a higher \acrlong{eer}, in
+the cases where the full cooling capacity is not required.
 
 \subsubsection*{Ventilation}
 
 According to the manufacturer manual \cite{aermecRoofTopManuelSelection}, the
-HVAC unit's external fan has an air debit ranging between 4900
+\acrshort{hvac} unit's external fan has an air debit ranging between 4900
 $\text{m}^3/\text{h}$ and 7000 $\text{m}^3/\text{h}$.
 
 \subsubsection*{Air Exchange Rate}\label{sec:Air_Exchange_Rate}
@@ -384,7 +388,8 @@ computed by dividing the air flow through the room by the room volume:
     \text{Air exchange rate} = \frac{\text{Air flow}}{\text{Total volume}}
 \end{equation}
 
-In the case of the \pdome\ and its HVAC, this results in an airflow range of:
+In the case of the \pdome\ and its \acrshort{hvac}, this results in an airflow
+range of:
 
 \begin{equation}
     \begin{aligned}
@@ -402,7 +407,7 @@ would require more precise measurements to estimate.
 
 \subsection{Validating against experimental data}\label{sec:CARNOT_experimental}
 
-In order to confirm the validity of the model it is necessary to compare the
+In order to confirm the validity of the model, it is necessary to compare the
 CARNOT models' behaviour against that of the real \pdome\ building.
 
 Section~\ref{sec:CARNOT_expdata} presents the available experimental data,
@@ -421,8 +426,8 @@ The data has been collected in the time span of June to August 2017, and is
 divided in seven different experiments, as presented in
 Figure~\ref{tab:exp_dates}. The available measurements are the \textit{Outside
 Temperature}, \textit{Solar Irradiation}, \textit{Electrical power consumption}
-of the HVAC, and two measurements of \textit{Inside Temperature} in different
-parts of the room.
+of the \acrshort{hvac}, and two measurements of \textit{Inside Temperature} in
+different parts of the room.
 
 \begin{table}[ht]
 \centering
@@ -445,27 +450,29 @@ parts of the room.
 
 \clearpage
 
-As mentioned previously, the external fan of the HVAC is constantly running.
-This can be seen in Figure~\ref{fig:Polydome_electricity} as the electricity
-consumption of the HVAC has a baseline of 1.67 kW of power consumption.
+As mentioned previously, the external fan of the \acrshort{hvac} is constantly
+running.  This can be seen in Figure~\ref{fig:Polydome_electricity} as the
+electricity consumption of the \acrshort{hvac} has a baseline of 1.67 kW.
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width = \textwidth]{Plots/Fan_baseline.pdf}
-    \caption{Electrical Power consumption of the \pdome\ HVAC for Experiment 7}
+    \caption{Electrical Power consumption of the \pdome\ \acrshort{hvac} for Experiment 7}
     \label{fig:Polydome_electricity}
 \end{figure}
 
 Figure~\ref{fig:Polydome_electricity} also gives an insight into the workings of
-the HVAC when it comes to the combination of the two available compressors. The
-instruction manual of the HVAC~\cite{aermecRoofTopManuelSelection} notes that in
-summer only one of the compressors is running. This allows for a larger
-\acrshort{eer} value and thus better performance. We can see that this is the
-case for most of the experiment, where the power consumption caps at around 6
-kW. There are, however, moments during the first part of the experiment where
-the power momentarily peaks over the 6 kW limit, and goes as high as around 9
-kW. This most probably happens when the HVAC decides that the difference between
-the set point temperature and the actual measured values is too large.
+the \acrshort{hvac} when it comes to the combination of the two available
+compressors. The instruction manual of the
+\acrshort{hvac}~\cite{aermecRoofTopManuelSelection} notes that in summer only
+one of the compressors is running. This allows for a larger \acrshort{eer} value
+and thus better performance. We can see that this is the case for most of the
+experiment, where the power consumption caps at around 6~kW. There are, however,
+moments during the first part of the experiment where the power momentarily
+peaks over the 6~kW limit, and goes as high as around 9~kW. This most probably
+happens when the \acrshort{hvac} decides that the difference between the set
+point temperature and the actual measured values is too large to compensate with
+a single compressor.
 
 Figure~\ref{fig:Polydome_exp7_settemp} presents the values of the set point
 temperature and the measured internal temperature. 
@@ -473,7 +480,7 @@ temperature and the measured internal temperature.
 \begin{figure}[ht]
     \centering
     \includegraphics[width = \textwidth]{Plots/Exp_settemp.pdf}
-    \caption{Measured vs set point temperature of the HVAC for Experiment 7}
+    \caption{Measured vs set point temperature of the \acrshort{hvac} for Experiment 7}
     \label{fig:Polydome_exp7_settemp}
 \end{figure}
 
@@ -484,8 +491,8 @@ beginning of Experiment 7, as well as the majority of the other experiments, the
 set point temperature is the value that gets changed in order to excite the
 system, and since the \acrshort{hvac}'s controller is on during identification,
 it will oscillate between using one or two compressors. Lastly, it is possible
-to notice that the HVAC is not turned on during the night, with the exception of
-the external fan, which runs continuously.
+to notice that the \acrshort{hvac} is not turned on during the night, with the
+exception of the external fan, which continues running.
 
 \subsubsection{The CARNOT WDB weather data format}\label{sec:CARNOT_WDB}
 
@@ -499,12 +506,12 @@ pressure, wind speed and direction, etc.  A detailed overview of each
 measurement necessary for a simulation is given in the CARNOT user
 manual~\cite{CARNOTManual}.
 
-In order to compare the CARNOT model's performance to that of the real \pdome\
+In order to compare the CARNOT model's performance to that of the real \pdome\,
 it is necessary to simulate the CARNOT model under the same set of conditions as
 the ones present during the experimental data collection. In order to do this,
 all the missing values that are required by the simulation have to be filled. In
 some cases, such as the sun angles it is possible to compute the exact values,
-but in other cases the real data is not available, which means that is has to be
+but in other cases the real data is not available, which means that it has to be
 inferred from the available data.
 
 The information on the zenith and azimuth solar angles can be computed exactly
@@ -514,7 +521,7 @@ information available, the zenith, azimuth angles, as well as the \acrfull{aoi}
 are computed using the Python pvlib
 library~\cite{f.holmgrenPvlibPythonPython2018}.
 
-As opposed to the solar angles which can be computed exactly from the available
+As opposed to the solar angles, which can be computed exactly from the available
 information, the Solar Radiation Components (DHI and DNI) have to be estimated
 from the available measurements of GHI, zenith angles (Z) and datetime
 information.  \textcite{erbsEstimationDiffuseRadiation1982} present an empirical
@@ -535,33 +542,33 @@ are computed using the Python pvlib.
 
 The values that cannot be either calculated or approximated from the available
 data, such as the precipitation, wind direction, incidence angles in place of
-vertical and main/secondary surface axis have been replaced with the default
+vertical and main/secondary surface axis, have been replaced with the default
 CARNOT placeholder value of -9999. The relative humidity, cloud index, pressure
 and wind speed have been fixed to 50\%, 0.5, 96300 Pa, 0 $\text{m}/\text{s}$
 respectively.
 
 \subsubsection{\pdome\ and CARNOT model comparison}\label{sec:CARNOT_comparison}
 
-With the WDB data compiled, we can now turn to simulating the CARNOT model and
-compare its behaviour to that of the real \pdome\ building. 
+With the \acrshort{wdb} data compiled, we can now turn to simulating the CARNOT
+model and compare its behaviour to that of the real \pdome\ building. 
 
-Unfortunately, one crucial piece of information is missing: the amount of heat
-the HVAC either pumps in or takes out of the building at any point in time. This
-value could be approximated from the information of electrical power consumption
-and the EER, COP values given that it is known if the HVAC is in either heating
-or cooling mode. 
+Unfortunately, one crucial piece of information is still missing: the amount of
+heat that the \acrshort{hvac} either pumps in or takes out of the building at
+any point in time.  This value could be approximated from the information of
+electrical power consumption and the \acrshort{eer}/\acrshort{cop} values given
+that it is known if the \acrshort{hvac} is in either heating or cooling mode. 
 
 This information lacking in the existing experimental datasets, the heat
 supplied/ taken out of the system has been inferred from the electrical energy
-use, measured building temperature and HVAC temperature set point, with the
-assumption that the HVAC is in cooling mode whenever the measurements are
-higher than the set point temperature, and is in heating mode otherwise. As it
-can already be seen in Figure~\ref{fig:Polydome_exp7_settemp}, this is a very
-strong assumption, that is not necessarily always correct. It works well when
-the measurements are very different from the set point, as is the case in the
-first part of the experiment, but this assumption is false for the second part
-of the experiment, where the set point temperature remains fixed and it is purely
-the HVAC's job to regulate the temperature.
+use, measured building temperature and \acrshort{hvac} temperature set point,
+with the assumption that the \acrshort{hvac} is in cooling mode whenever the
+measurements are higher than the set point temperature, and is in heating mode
+otherwise. As it can already be seen in Figure~\ref{fig:Polydome_exp7_settemp},
+this is a very strong assumption, that is not necessarily always correct. It
+works well when the measurements are very different from the set point, as is
+the case in the first part of the experiment, but this assumption is false for
+the second part of the experiment, where the set point temperature remains fixed
+and it is purely the \acrshort{hvac}'s job to regulate the temperature.
 
 \begin{figure}[ht]
     \centering
@@ -575,23 +582,23 @@ the HVAC's job to regulate the temperature.
 The results of the seven simulations are presented in
 Figure~\ref{fig:CARNOT_simulation_validation}. Overall, the simulated
 temperature has the same behaviour as the real \pdome\ measurements. A more
-detailed inspection shows that for most of the experiments the simulated
+detailed inspection shows that for most of the experiments, the simulated
 temperature is much more volatile than the true measurements. This could be due
 to an overestimated value of the Air Exchange Rate, underestimated amount of
-furniture in the building, or, more probably, miscalculation of the HVAC's
-heating/cooling mode. Of note is the large difference in behaviour for the
-Experiments 5 and 6. In fact, for these experiments, the values for the
-electrical power consumption greatly differ in shape from the ones presented in
-the other datasets, which could potentially mean erroneous measurements, or some
-other underlying problem with the data.
+furniture in the building or, more probably, miscalculation of the
+\acrshort{hvac}'s heating/cooling mode. Of note is the large difference in
+behaviour for the Experiments 5 and 6. In fact, for these experiments, the
+values for the electrical power consumption greatly differ in shape from the
+ones presented in the other datasets, which could potentially mean erroneous
+measurements, or some other underlying problem with the data.
 
 Finally, it is possible to conclude that the CARNOT building behaves comparably
 to the real \pdome\, even if not perfectly simulates its behaviour. These
-differences  could come from multiple factors, missing information that had to
-be inferred and/or approximated, such as the Air Exchange Ratio, the heat
+differences  could come from multiple factors --- missing information that had
+to be inferred and/or approximated, such as the Air Exchange Ratio, the heat
 provided/extracted, the amount of furniture in the building, the overall shape
 and size of the building, as well as possibly errors in the experimental data
 used for validation. A more detailed analysis of the building parameters would
-have to be done in order to find the reason and eliminate these discrepancies.
+have to be done in order to find the reasons and eliminate these discrepancies.
 
 \clearpage

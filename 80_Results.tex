@@ -1,10 +1,10 @@
 \section{Results}\label{sec:results}
 
 
-% TODO [Results] Add info on control horizon
-
 This section focuses on the presentation and interpretation of the year-long
-simulation of the control schemes present previously.
+simulation of the control schemes present previously. All the control schemes
+analysed in this Section have been done with a sampling time of 15 minutes and a
+control horizon of 8 steps.
 
 Section~\ref{sec:GP_results} analyses the results of a conventional
 \acrlong{gp} Model trained on the first five days of gathered data. The models
@@ -25,7 +25,7 @@ is then employed for the rest of the year.
 
 With a sampling time of 15 minutes, the model is trained on 480 points of data.
 This size of the identification dataset is enough to learn the behaviour of the
-plant, without being too complex to solve from a numerical perspective, the
+plant, without being too complex to solve from a numerical perspective. The
 current implementation takes roughly 1.5 seconds of computation time per step.
 For reference, identifying a model on 15 days worth of experimental data (1440
 points) makes simulation time approximately 11 --- 14 seconds per step, or
@@ -39,8 +39,8 @@ $\degree$C in the stable part of the simulation. The offset becomes much larger
 once the reference temperature starts moving from the initial constant value.
 The controller becomes completely unstable around the middle of July, and can
 only regain some stability at the middle of October. It is also possible to note
-that from mid-October --- end-December the controller has very similar
-performance to that exhibited in the beginning of the year, namely January ---
+that from mid-October to end-December the controller has very similar
+performance to that exhibited in the beginning of the year, namely January to
 end-February.
 
 \begin{figure}[ht]
@@ -52,10 +52,10 @@ end-February.
 \end{figure}
 
 This very large difference in performance could be explained by the change in
-weather during the year. The winter months of the beginning of the year and end
-of year exhibit similar performance, the spring months already make the
-controller less stable than at the start of the year, while the drastic
-temperature changes in the summer make the controller completely unstable.
+weather during the year. The winter months of the beginning and end of the year
+exhibit similar performance. The spring months already make the controller less
+stable than at the start of the year, while the drastic temperature changes in
+the summer make the controller completely unstable.
 
 \clearpage
 
@@ -76,14 +76,14 @@ occurring during the winter months.
 
 Figure~\ref{fig:GP_first_model_performance} analyses the 20-step ahead
 simulation performance of the identified model over the course of the year. At
-experimental step 250 the controller is still gathering data. It is therefore
+experimental step 250, the controller is still gathering data. It is therefore
 expected that the identified model will be capable of reproducing this data. At
 step 500, 20 steps after identification, the model correctly steers the internal
 temperature towards the reference temperature. On the flip side, already at
 experimental steps 750 and 1000, only 9 days into the simulation, the model is
 unable to properly simulate the behaviour of the plant, with the maximum
-difference at the end of the simulation reaching 0.75 and 1.5 $\degree$C
-respectively.
+difference at the end of the simulation reaching 0.75 $\degree$C and 1.5
+$\degree$C respectively.
 
 \begin{figure}[ht]
     \centering
@@ -144,9 +144,12 @@ The results of this setup are presented in
 Figure~\ref{fig:SVGP_fullyear_simulation}. It can already be seen that this
 setup performs much better than the initial one. The only large deviations from
 the reference temperature are due to cold --- when the \acrshort{hvac}'s limited
-heat capacity is unable to maintain the proper temperature.
+heat capacity is unable to maintain the proper temperature. Additionnaly, the
+\acrshort{svgp} controller takes around 250-300ms of computation time for each
+simulation time, decreasing the computational cost of the original \acrshort{gp}
+by a factor of six.
 
-% TODO: [Results] Add info on SVGP vs GP computation speed
+
 
 \begin{figure}[ht]
     \centering
@@ -194,7 +197,7 @@ starting at 107500 and 11000 points.
     \centering
     \includegraphics[width =
     \textwidth]{Plots/1_SVGP_480pts_inf_window_12_averageYear_first_model_performance.pdf}
-    \caption{GP first model performance}
+    \caption{SVGP first model performance}
     \label{fig:SVGP_first_model_performance}
 \end{figure}
 
@@ -214,7 +217,7 @@ than the classical \acrshort{gp} model to capture the building dynamics.
     \centering
     \includegraphics[width =
     \textwidth]{Plots/1_SVGP_480pts_inf_window_12_averageYear_later_model_performance.pdf}
-    \caption{GP later model performance}
+    \caption{SVGP later model performance}
     \label{fig:SVGP_later_model_performance}
 \end{figure}
 
@@ -229,7 +232,7 @@ respectively.
     \centering
     \includegraphics[width =
     \textwidth]{Plots/1_SVGP_480pts_inf_window_12_averageYear_last_model_performance.pdf}
-    \caption{GP last model performance}
+    \caption{SVGP last model performance}
     \label{fig:SVGP_last_model_performance}
 \end{figure}
 
@@ -255,12 +258,12 @@ control scheme:
         closed-loop operation, will the performance deteriorate drastically if
         the first model is trained on less data?
     \item How much information can the model extract from closed-loop operation?
-        Would a model trained on only the last five days of closed-loop
-        operation data be able to perform correctly?
+        Would a model trained on a window of only the last five days of 
+        closed-loop operation data be able to perform correctly?
 \end{itemize}
 
-These questions will be further analysed in the Sections~\ref{sec:svgp_window}
-and~\ref{sec:svgp_96pts} respectively.
+These questions will be further analysed in the Sections~\ref{sec:svgp_96pts}
+and~\ref{sec:svgp_window} respectively.
 
 \clearpage
 
@@ -299,8 +302,8 @@ months. This might be due to the fact that during the colder months, the
 additional heat to the system.
 
 A similar trend can be observed for the evolution of the input's
-hyperparameters, with the exception that the first lag of the controlled input,
-$u1,1$ remains the most important over the course of the year.
+hyperparameters, with the exception that the first lag of the controlled input
+($u1,1$) remains the most important over the course of the year.
 
 For the lags of the measured output it can be seen that, over the course of the
 year, the importance of the first lag decreases, while that of the second and
@@ -342,7 +345,7 @@ refinements being done as data is added to the system.
 One question that could be addressed given these mostly linear kernel terms is
 how well would an \acrshort{svgp} model perform with a linear kernel.
 Intuition would hint that it should still be able to track the reference
-temperature, albeit not as precisely due to the correlation that diminished much
+temperature, albeit not as precisely due to the correlation that diminishes much
 slower when the two points are closer together in the \acrshort{se} kernel. This
 will be further investigated in Section~\ref{sec:svgp_linear}.
 
@@ -351,7 +354,7 @@ will be further investigated in Section~\ref{sec:svgp_linear}.
 \subsection{SVGP with one day of starting data}\label{sec:svgp_96pts}
 
 As previously discussed in Section~\ref{sec:SVGP_results}, the \acrshort{svgp}
-model is able to properly adapt given new information, overtime refining it's
+model is able to properly adapt given new information, overtime refining its
 understanding of the plant's dynamics.
 
 Analyzing the results of a simulation done on only one day's worth of initial
@@ -381,26 +384,26 @@ for cumbersome and potentially costly initial experiments for gathering data.
 
 \subsection{SVGP with a five days moving window}\label{sec:svgp_window}
 
-This section presents the result of running a different control scheme. Here,
-as the base \acrshort{svgp} model, it is first trained on 5 days worth of data,
-with the difference being that each new model is only identified using the last
-five days' worth of data. This should provide an insight on whether the
-\acrshort{svgp} model is able to understand model dynamics only based on
-closed-loop operation.
+This section presents the result of running a different control scheme. Here, as
+was the case for the base \acrshort{svgp} model, it is first trained on 5 days
+worth of data, with the difference being that each new model is only identified
+using the last five days' worth of data. This should provide an insight on
+whether the \acrshort{svgp} model is able to understand model dynamics only
+based on closed-loop operation.
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width =
     \textwidth]{Plots/5_SVGP_480pts_480pts_window_12_averageYear_fullyear.pdf}
-    \caption{SVGP full year simulation}
+    \caption{Windowed SVGP full year simulation}
     \label{fig:SVGP_480window_fullyear_simulation}
 \end{figure}
 
 As it can be seen in Figure~\ref{fig:SVGP_480window_fullyear_simulation}, this
 model is unable to properly track the reference temperature. In fact, five days
-after the identification the model forgets all the initial data and becomes
+after the identification, the model forgets all the initial data and becomes
 unstable. This instability then generates enough excitation of the plant for the
-model to again learn its behaviour. This cycle repeats every five days, when the
+model, to again learn its behaviour. This cycle repeats every five days, when the
 controller becomes unstable. In the stable regions, however, the controller is
 able to track the reference temperature. 
 
@@ -422,16 +425,13 @@ nuanced details of the CARNOT model dynamics.
     \centering
     \includegraphics[width =
     \textwidth]{Plots/10_SVGP_480pts_inf_window_12_averageYear_LinearKernel_fullyear.pdf}
-    \caption{SVGP full year simulation}
+    \caption{Linear SVGP full year simulation}
     \label{fig:SVGP_linear_fullyear_simulation}
 \end{figure}
 
 \clearpage
 
 \subsection{Comparative analysis}
-
-This section will compare all the results presented in the previous Sections and
-try to analyze the differences and their origin.
 
 Presented in Table~\ref{tab:Model_comparations} are the Mean Error, Error
 Variance and Mean Absolute Error for the full year simulation for the three
@@ -467,12 +467,12 @@ The two \acrshort{svgp} models with \acrlong{se} kernels perform the best. They
 have a comparable performance, with very small differences in Mean Absolute
 Error and Error variance. This leads to the conclusion that the \acrshort{svgp}
 models can be deployed with less explicit identification data, but they will
-continue to improve over the course of the year as the building passes through
+continue to improve over the course of the year, as the building passes through
 different regions of the state space and more data is collected.
 
-These results do not, however, discredit the use of \acrlong{gp} for use in a
-multi-seasonal situation. As shown before, given the same amount of data and
-ignoring the computational cost, they perform better than the alternative
+These results do not, however, discredit the use of \acrlong{gp} for employment
+in a multi-seasonal situation. As shown before, given the same amount of data
+and ignoring the computational cost, they perform better than the alternative
 \acrshort{svgp} models. The bad initial performance could be mitigated by
 sampling the identification data at different points in time during multiple
 experiments, updating a fixed-size dataset based on the gained information, as

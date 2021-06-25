@@ -1,4 +1,34 @@
 \section{Conclusion}
 
+The aim of this project was to analyse the performance of \acrshort{gp} based
+controllers for use in longer lasting implementations, where differences in
+building behaviour become important compared to the initially available data.
+
+First, the performance of a classical \acrshort{gp} model trained on 5 days
+worth of experimental data was analysed. This model turned out to be unable to
+correctly extrapolate building behaviour as the weather changed throughout the
+year.
+
+Several \acrshort{svgp} implementations were then analysed. They turned out to
+provide important benefits over the classical models, such as the ability to
+easily scale when new data is being added and the much reduced computational
+effort required. They do however present some downsides, namely increasing the
+number of hyperparameters by having to choose the number of inducing locations,
+as well as performing worse than then classical \acrshort{gp} implementation
+given the same amount of data.
+
+Finally, the possible improvements to the current implementations have been
+addressed, noting that classical \acrshort{gp} implementations could also be
+adapted to the \textit{learning control} paradigm, even if their implementation
+could turn out to be much more involved and more computationally expensive than
+the \acrshort{svgp} alternative.
+
+\section*{Acknowledgements}
+
+I would like to thank Koch Manuel Pascal for the great help provided during the
+course of the project starting from the basics on CARNOT modelling, to helping
+me better compare the performance of different controllers, as well as Professor
+Jones, whose insights were always very guiding, while still allowing me to
+discover everything on my own.
 
 \clearpage

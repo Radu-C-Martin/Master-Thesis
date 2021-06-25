@@ -1,9 +1,27 @@
 \section{Introduction}
 
-% TODO: [Introduction] Control for building regulation
+Buildings are a major consumer of energy, with more than 25\% of the total
+energy consumed in the EU coming from residential
+buildings~\cite{tsemekiditzeiranakiAnalysisEUResidential2019}. Combined with a
+steady increase in energy demand and stricter requirements on energy
+efficiency~\cite{europeancommission.jointresearchcentre.EnergyConsumptionEnergy2018},
+this amplifies the need for more accessible means of regulating energy usage of
+new and existing buildings.
 
+Data-driven methods of building identification and control prove very useful
+through their ease of implementation, foregoing the need of more complex
+physics-based models. On the flip side, additional attention is required to the
+design of these control schemes, as the results could vary greatly from one
+implementation to another.
 
-% TODO: [Introduction] Benefits of data-driven methods
+Gaussian Processes have been previously used to model building dynamics, but
+they are usually limited by a fixed computational budget. This limits the
+approaches that can be taken for identification and update of said models.
+Learning \acrshort{gp} models have also been previously used in the context of
+autonomous racing cars, but there the Sparse \acrshort{gp} model was built on
+top of a white-box model and only responsible for fitting the unmodeled
+dynamics. 
 
-
-% TODO: [Introduction] Big lines previous research and why
+This project means to provide a further expansion of the use of black-box
+\acrlong{gp} Models in the context of building control, through online learning
+of building dynamics at new operating points as more data gets collected.

@@ -5,22 +5,22 @@ simulation for a classical \acrshort{gp} model, as well as a few incarnations of
 \acrshort{svgp} models. The results show that the \acrshort{svgp} have much
 better performance, mainly due to the possibility of updating the model
 throughout the year. The \acrshort{svgp} models also present a computational
-cost advantage both in training and in evaluation due to several approximations
+cost advantage both in training and in evaluation, due to several approximations
 shown in Section~\ref{sec:gaussian_processes}.
 
 Focusing on the \acrlong{gp} models, there could be several ways of improving
 its performance, as noted previously: a more varied identification dataset and
-smart update of a fixed-size data dictionary according to information gain could
-mitigate the present problems.
+smart update of a fixed-size data dictionary according to information gain,
+could mitigate the present problems.
 
-Using a Sparse \acrshort{gp} without also replacing the maximum log likelihood
+Using a Sparse \acrshort{gp} without replacing the maximum log likelihood
 with the \acrshort{elbo} could improve performance of the \acrshort{gp} model at
 the expense of training time.
 
 An additional change that could be made is inclusion of the most amount of prior
 information possible through setting a more refined kernel, as well as adding
 prior information on all the model hyperparameters when available. This approach
-however goes against the "spirit" of black-box approaches since significant
+however goes against the "spirit" of black-box approaches, since significant
 insight into the physics of the plant is required in order to properly model and
 implement this information.
 
@@ -29,14 +29,14 @@ not properly addressed in this work. First, the size of the inducing dataset was
 chosen experimentally until it was found to accurately reproduce the manually
 collected experimental data. In order to better use the available computational
 resources, this value could be found programmatically in a way to minimize
-evaluation time while still providing good performance. Another possibility is
+evaluation time, while still providing good performance. Another possibility is
 the periodic re-evaluation of this value when new data comes in, since as more
 and more data is collected the model becomes more complex, and in general more
 inducing locations could be necessary to properly reproduce the training data.
 
-Finally, none of the presented controllers take into account occupancy rates or adapt to
-possible changes in the real building, such as adding or removing furniture,
-deteriorating insulation and so on. The presented update methods only deals with
-adding information on behaviour in different state space regions, i.e
+Finally, none of the presented controllers take into account occupancy rates or
+adapt to possible changes in the real building, such as adding or removing
+furniture, deteriorating insulation and so on. The presented update methods only
+deals with adding information on behaviour in different state space regions, i.e
 \textit{learning}, and their ability to \textit{adapt} to changes in the actual
 plant's behaviour should be further addressed.

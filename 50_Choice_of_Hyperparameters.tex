@@ -16,12 +16,12 @@ model hyperparameters: the number of regressors, the number of autoregressive
 lags for each class of inputs, the shape of the covariance function have to be
 taken into account when designing a \acrshort{gp} model. These choices have
 direct influence on the resulting model behaviour and where it can be
-generalized, as well as indirect influence in the form of more expensive
+generalized, as well as indirect influence in the form of more time consuming
 computations in the case of larger number of regressors and more complex kernel
 functions.
 
 As described in Section~\ref{sec:gp_dynamical_system}, for the purpose of this
-project the \acrlong{gp} model will be trained using the \acrshort{narx}
+project, the \acrlong{gp} model will be trained using the \acrshort{narx}
 structure. This already presents an important choice in the selection of
 regressors and their respective autoregressive lags.
 
@@ -31,14 +31,14 @@ defined in Section~\ref{sec:mpc_problem}, where the goal is tracking as close as
 possible the inside temperature of the building.
 
 The input of the \acrshort{gp} model coincides with the input of the CARNOT
-building, namely the \textit{power} passed to the idealized \acrshort{hvac},
-which is held constant during the complete duration of a step.
+building, namely the \textit{heat} passed to the idealized \acrshort{hvac},
+which is held constant at each step.
 
 As for the exogenous inputs the choice turned out to be more complex. The CARNOT
-WDB format (cf. Section~\ref{sec:CARNOT_WDB}) consists of information of all the
-solar angles, the different components of solar radiation, wind speed and
-direction, temperature, precipitation, etc. All of this information is required
-in order for CARNOT's proper functioning. 
+\acrshort{wdb} format (cf. Section~\ref{sec:CARNOT_WDB}) consists of information
+of all the solar angles, the different components of solar radiation, wind speed
+and direction, temperature, precipitation, etc. All of this information is
+required in order for CARNOT's proper functioning. 
 
 Including all of this information into the \acrshort{gp}s exogenous inputs would
 come with a few downsides. First, depending on the number of lags chosen for the
@@ -57,10 +57,10 @@ measurement of the outside temperature. This would also be a limitation when
 getting the weather predictions for the next steps during real-world
 experiments.
 
-Last, while very verbose information such as the solar angles and the components
-of the solar radiation is very useful for CARNOT, which simulated each node
-individually, knowing their absolute positions, this information would not
-always benefit the \acrshort{gp} model, at least not comparably to the
+Last, while very verbose information, such as the solar angles and the components
+of the solar radiation is very useful for CARNOT which simulates each node
+individually knowing their absolute positions, this information would not
+always benefit the \acrshort{gp} model at least not comparably to the
 additional computational complexity.
 
 For the exogenous inputs the choice has therefore been made to take the
@@ -70,7 +70,7 @@ For the exogenous inputs the choice has therefore been made to take the
 
 The covariance matrix is an important choice when creating the \acrshort{gp}. A
 properly chosen kernel can impose a prior desired behaviour on the
-\acrshort{gp} such as continuity of the function an its derivatives,
+\acrshort{gp} such as continuity of the function and its derivatives,
 periodicity, linearity, etc. On the flip side, choosing the wrong kernel can
 make computations more expensive, require more data to learn the proper
 behaviour or outright be numerically unstable and/or give erroneous predictions.
@@ -87,7 +87,7 @@ Kernel~\cite{pleweSupervisoryModelPredictive2020}, a combination of
 Kernel~\cite{jainLearningControlUsing2018}, Squared Exponential Kernel and
 Kernels from the M\`atern family~\cite{massagrayThermalBuildingModelling2016}.
 
-For the purpose of this project the choice has been made to use the
+For the purpose of this project, the choice has been made to use the
 \textit{\acrlong{se} Kernel}, as it provides a very good balance of versatility
 and computational complexity for the modelling of the CARNOT building.
 
@@ -117,7 +117,7 @@ three lengthscales apart.
 
 From Table~\ref{tab:se_correlation} is can be seen that at 3 lengthscales apart,
 the inputs are already almost uncorrelated. In order to better visualize this
-difference the value of relative lengthscale importance is introduced:
+difference the value of \textit{relative lengthscale importance} is introduced:
 
 \begin{equation}
     \lambda = \frac{1}{\sqrt{l}}
@@ -171,17 +171,19 @@ the past inputs, with the exception of the models with very high variance, where
 the relative importances stay almost constant across all the inputs. For the
 exogenous inputs, the outside temperature ($w2$) is generally more important
 than the solar irradiation ($w1$). In the case of more autoregressive lags for
-the exogenous inputs, the more recent information is usually more important,
-with a few exceptions {\color{red} Continue this sentence after considering the
-2/1/3 classical GP model}
+the exogenous inputs the more recent information is usually more important in
+the case of the solar irradiation, while the second-to-last measurement is
+preffered for the outside temperature.
 
-% TODO: [Hyperparameters] Classical GP parameters choice
+For the classical \acrshort{gp} model the appropriate choice of lags would be
+$l_u = 1$ and $l_y = 3$ with $l_w$ taking the values of either 1, 2 or 3,
+depending on the results of further analysis.
 
 
 As for the case of the \acrlong{svgp}, the results for the classical
 \acrshort{gp} (cf. Table~\ref{tab:GP_hyperparameters}) are not necessarily
 representative of the relationships between the regressors of the
-\acrshort{svgp} model due to the fact that the dataset used for training is
+\acrshort{svgp} model, due to the fact that the dataset used for training is
 composed of the \textit{inducing variables}, which are not the real data, but a
 set of parameters chosen by the training algorithm in a way to best generate the
 original data.
@@ -249,7 +251,7 @@ suggests, it computes the root of the mean squared error:
 \end{equation}
 
 This performance metric is very useful when training a model whose goal is
-solely to minimize the difference between the values measured, and the ones
+solely to minimize the difference between the measured values, and the ones
 predicted by the model.
 
 A variant of the \acrshort{mse} is the \acrfull{smse}, which normalizes the
@@ -263,8 +265,8 @@ A variant of the \acrshort{mse} is the \acrfull{smse}, which normalizes the
 While the \acrshort{rmse} and the \acrshort{smse} are very good at ensuring the
 predicted mean value of the Gaussian Process is close to the measured values of
 the validation dataset, the confidence of the Gaussian Process prediction is
-completely ignored. In this case two models predicting the same mean values, but
-having very different confidence intervals would be equivalent according to these
+completely ignored. In this case, two models predicting the same mean values but
+having very different confidence intervals, would be equivalent according to these
 performance metrics.
 
 The \acrfull{lpd} is a performance metric which takes into account not only the
@@ -336,15 +338,15 @@ overconfident, either due to the very large kernel variance parameter, or the
 specific lengthscales combinations. The model with the best
 \acrshort{rmse}/\acrshort{smse} metrics \model{1}{2}{3} had very bad
 \acrshort{msll} and \acrshort{lpd} metrics, as well as by far the largest
-variance of all the combinations. On the contrary the \model{3}{1}{3} model has
+variance of all the combinations. On the contrary, the \model{3}{1}{3} model has
 the best \acrshort{msll} and \acrshort{lpd} performance, while still maintaining
 small \acrshort{rmse} and \acrshort{smse} values. The inconvenience of this set
 of lags is the large number of regressors, which leads to much more expensive
 computations. Other good choices for the combinations of lags are
 \model{2}{1}{3} and \model{1}{1}{3}, which have good performance on all four
 metrics, as well as being cheaper from a computational perspective. In order to
-make a more informed choice for the best hyperparameters, the performance of all
-three combinations has been analysed.
+make a more informed choice for the best hyperparameters, the simulation
+performance of all three combinations has been analysed.
 
 \clearpage
 
@@ -376,7 +378,7 @@ The results for the \acrshort{svgp} model, presented in
 Table~\ref{tab:SVGP_loss_functions} are much less ambiguous. The \model{1}{2}{3}
 model has the best performance according to all four metrics, with most of the
 other combinations scoring much worse on the \acrshort{msll} and \acrshort{lpd}
-loss functions. This has therefore been chosen as the model for the full year
+loss functions. This has, therefore, been chosen as the model for the full year
 simulations.
 
 
@@ -453,16 +455,21 @@ Appendix~\ref{apx:hyperparams_gp}, Figure~\ref{fig:GP_313_test_validation},
 where the model has much worse performance on the testing dataset predictions
 than the other two models.
 
-Overall, the performance of the three models in simulation mode is consistent
-with the previously found results. It is of note that neither the model that
-performed the best on the \acrshort{rmse}/\acrshort{smse}, \model{1}{2}{3}, nor
-the one that had the best \acrshort{msll}/\acrshort{lpd}, perform the best under
-a simulation scenario. In the case of the former it is due to numerical
-instability, the training/ prediction often failing depending on the inputs. On
-the other hand, in the case of the latter, only focusing on the
-\acrshort{msll}/\acrshort{lpd} performance metrics can lead to over fitted
-models, that give good and confident one-step ahead predictions, while still
-unable to fit the true behaviour of the plant.
+The performance of the three models in simulation mode is consistent with the
+previously found results. It is of note that neither the model that scored the
+best on the \acrshort{rmse}/\acrshort{smse}, \model{1}{2}{3}, nor the one that
+had the best \acrshort{msll}/\acrshort{lpd}, perform the best under a simulation
+scenario. In the case of the former it is due to numerical instability, the
+training/ prediction often failing depending on the inputs. On the other hand,
+in the case of the latter, only focusing on the \acrshort{msll}/\acrshort{lpd}
+performance metrics can lead to very conservative models, that give good and
+confident one-step ahead predictions, while still unable to fit the true
+behaviour of the plant.
+
+Overall, the \model{2}{1}{3} performed the best in the simulation scenario,
+while still having good performance on all loss functions. In implementation,
+however, this model turned out to be very unstable, and the more conservative
+\model{1}{1}{3} model was used instead.
 
 \clearpage
 
