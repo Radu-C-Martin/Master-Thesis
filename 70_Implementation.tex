@@ -4,7 +4,7 @@ This section goes into the details of the implementation of the Simulink plant
 and Python controller setup.
 
 A high-level view of the setup is presented in Figure~\ref{fig:setup_diagram}.
-The Simulink model's main responsability is running the CARNOT simulation. It
+The Simulink model's main responsibility is running the CARNOT simulation. It
 also has the task of providing the \acrshort{mpc} with information on the
 weather forecast, since the weather information for the simulation comes from a
 CARNOT \acrshort{wdb} object. A detailed view of all the information available
@@ -62,7 +62,7 @@ starting and ending points, while retaining a simple implementation.
 \subsection{Gaussian Processes}
 
 As described in Section~\ref{sec:gaussian_processes}, both training and
-evaluating a \acrshort{gp} has an algotirhmic complexity of $\mathcal{O}(n^3)$.
+evaluating a \acrshort{gp} has an algorithmic complexity of $\mathcal{O}(n^3)$.
 This means that naive implementations can get too expensive in terms of
 computation time very quickly.
 
@@ -70,7 +70,7 @@ In order to have as smallest of a bottleneck as possible when dealing with
 \acrshort{gp}s, a very optimized implementation of \acrlong{gp} Models was
 used, in the form of GPflow~\cite{matthewsGPflowGaussianProcess2017}. It is
 based on TensorFlow~\cite{tensorflow2015-whitepaper}, which has very efficient
-imeplentation of all the necessary Linear Algebra operations. Another benefit of
+implementation of all the necessary Linear Algebra operations. Another benefit of
 this implementation is the very simple use of any additional computational
 resources, such as a GPU, TPU, etc.
 
@@ -86,7 +86,7 @@ used for \acrshort{svgp} models.
 
 \subsubsection{Sparse and Variational Gaussian Process training}
 
-The \acrshort{svgp} models have a more involved oprimization procedure due to to
+The \acrshort{svgp} models have a more involved optimization procedure due to to
 several factors. First, when training an \acrshort{svgp} model, the optimization
 objective is the value of the \acrshort{elbo} (cf. Section~\ref{sec:elbo}).
 After several implementations, the more complex \textit{Adam} optimizer turned
@@ -147,7 +147,7 @@ The optimization problem as presented in
 Equation~\ref{eq:optimal_control_problem} becomes very nonlinear quite fast. In
 fact, due to the autoregressive structure of the \acrshort{gp}, the predicted
 temperature at time t is passed as an input to the model at time $t+1$. A simple
-recursive implementation of the Optimization Problem becomes untractable after
+recursive implementation of the Optimization Problem becomes intractable after
 only 3 --- 4 prediction steps. 
 
 In order to solve this problem, a new OCP is introduced. It has a much sparser
@@ -196,5 +196,7 @@ reference temperature (cf. Section~\ref{sec:reference_temperature}).
 For the case of the \acrshort{svgp}, a new model is trained once enough data is
 gathered. The implementations tested were updated once a day, either on the
 whole historical set of data, or on a window of the last five days of data.
+
+% TODO [Implementation] Add info on scaling
 
 \clearpage

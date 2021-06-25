@@ -130,7 +130,7 @@ observations and the fixed mean function:
 The choice of the kernel is an important part for any kernel machine class
 algorithm. It serves the purpose of shaping the behaviour of the \acrshort{gp}
 by imposing a desired level of smoothness of the resulting functions, a
-prediodicity, linearity, etc. This extends the use cases of the \acrshort{gp}
+periodicity, linearity, etc. This extends the use cases of the \acrshort{gp}
 models while including any available prior information of the system to be
 modeled.
 
@@ -148,8 +148,7 @@ continuous. The basic version of the \acrshort{se} kernel has the following form
     \mathbf{x'}}^2}{l^2}\right)}
 \end{equation}
 
-with the parameters $\sigma^2$ (model variance) and $l$ (lengthscale).
-with the model variance $\sigma^2$ and lengthscale $l$ as parameters.
+With the model variance $\sigma^2$ and lengthscale $l$ as parameters.
 
 The lengthscale indicates how fast the correlation diminishes as the two points
 get further apart from each other.
@@ -178,7 +177,7 @@ value of the hyperparameters. This is the \acrfull{ard} property.
 
 \subsubsection*{Rational Quadratic Kernel}
 
-The \acrfull{rq} Kernel can be intepreted as an infinite sum of \acrshort{se}
+The \acrfull{rq} Kernel can be interpreted as an infinite sum of \acrshort{se}
 kernels with different lengthscales. It has the same smooth behaviour as the
 \acrlong{se} Kernel, but can take into account the difference in function
 behaviour for large scale vs small scale variations.
@@ -340,7 +339,7 @@ The \acrshort{noe} structure is therefore a \textit{simulation model}.
 In order to get the best simulation results from a \acrshort{gp} model, the
 \acrshort{noe} structure would have to be employed. Due to the high algorithmic
 complexity of training and evaluating \acrshort{gp} models, this approach is
-computationally untractable. In practice a \acrshort{narx} model will be trained,
+computationally intractable. In practice a \acrshort{narx} model will be trained,
 which will be validated through multi-step ahead prediction.
 
 \clearpage

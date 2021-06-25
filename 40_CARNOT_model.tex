@@ -8,7 +8,7 @@ of different control schemes over long periods of time.
 
 The model is designed using the CARNOT
 toolbox~\cite{lohmannEinfuehrungSoftwareMATLAB} for Simulink. It is based on the
-CARNOT default \textit{Room Radiator} model, with the following canges:
+CARNOT default \textit{Room Radiator} model, with the following changes:
 \begin{itemize}
     \item Only one of the two default rooms is used
     \item The outside walls are replaced with windows
@@ -188,7 +188,7 @@ wall edge of 25m, we get the approximate volume of the building:
 
 The value presented in Equation~\ref{eq:numerical_volume} is used directly in
 the \textit{room\_node} of the CARNOT model (cf.
-Figure~\ref{fig:CARNOT_polydome}), as well as the calcualtion of the Air
+Figure~\ref{fig:CARNOT_polydome}), as well as the calculation of the Air
 Exchange Rate, presented in Section~\ref{sec:Air_Exchange_Rate}.
 
 \subsection{Furniture}
@@ -275,7 +275,7 @@ volume by the surface:
 
 In order to better simulate the behaviour of the real \pdome\ building it is
 necessary to approximate the building materials and their properties as close as
-possible. This section goes into the detailes and arguments for the choice of
+possible. This section goes into the details and arguments for the choice of
 parameters for each of the CARNOT nodes' properties.
 
 \subsubsection{Windows}
@@ -300,7 +300,7 @@ value for new window installations in the private sector buildings in
 Switzerland is 1.5
 \(\frac{W}{m^2K}\)~\cite{glassforeuropeMinimumPerformanceRequirements2018}.
 
-Considering the aforementioned values, and the fact the the \pdome\ building was
+Considering the aforementioned values, and the fact the \pdome\ building was
 built in 1993~\cite{nattererModelingMultilayerBeam2008}, the default U-factor of
 1.8 \(\frac{W}{m^2K}\) has been deemed appropriate.
 
@@ -356,17 +356,17 @@ Table~\ref{tab:material_properties}:
 
 \subsection{HVAC parameters}\label{sec:HVAC_parameters}
 
-The \pdome\ is equiped with an \textit{AERMEC RTY-04} HVAC system. According to
+The \pdome\ is equipped with an \textit{AERMEC RTY-04} HVAC system. According to
 the manufacturer's manual~\cite{aermecRoofTopManuelSelection}, this HVAC houses
 two compressors, of power 11.2 kW and 8.4 kW respectively, an external
-ventillator of power 1.67 kW, and a reflow ventillator of power 2 kW. The unit
-has a typical Energy Efficiency Ratio (EER, cooling efficiency) of 4.9 --- 5.1
-and a Coefficient of Performance (COP, heating efficiency) of 5.0, for a maximum
+ventilator of power 1.67 kW, and a reflow ventilator of power 2 kW. The unit has
+a typical \acrlong{eer} (\acrshort{eer}, cooling efficiency) of 4.9 --- 5.1 and
+a \acrlong{cop} (\acrshort{cop}, heating efficiency) of 5.0, for a maximum
 cooling capacity of 64.2 kW. 
 
 One particularity of this HVAC unit is that during summer only one of the two
-compressors are running. This results in a higher EER, in the cases where the
-full cooling capacity is not required.
+compressors are running. This results in a higher \acrlong{eer}, in the cases
+where the full cooling capacity is not required.
 
 \subsubsection*{Ventilation}
 
@@ -459,45 +459,45 @@ consumption of the HVAC has a baseline of 1.67 kW of power consumption.
 Figure~\ref{fig:Polydome_electricity} also gives an insight into the workings of
 the HVAC when it comes to the combination of the two available compressors. The
 instruction manual of the HVAC~\cite{aermecRoofTopManuelSelection} notes that in
-summer only one of the compressors is running. This allows for a larger EER
-value and thus better performance. We can see that this is the case for most of
-the experiment, where the pwoer consumption caps at around 6 kW. There are,
-however, moments during the first part of the experiment where the power
-momentarily peaks over the 6 kW limit, and goes as high as around 9 kW. This
-most probably happens when the HVAC decides that the difference between the
-setpoint temperature and the actual measured values is too large.
+summer only one of the compressors is running. This allows for a larger
+\acrshort{eer} value and thus better performance. We can see that this is the
+case for most of the experiment, where the power consumption caps at around 6
+kW. There are, however, moments during the first part of the experiment where
+the power momentarily peaks over the 6 kW limit, and goes as high as around 9
+kW. This most probably happens when the HVAC decides that the difference between
+the set point temperature and the actual measured values is too large.
 
-Figure~\ref{fig:Polydome_exp7_settemp} presents the values of the setpoint
+Figure~\ref{fig:Polydome_exp7_settemp} presents the values of the set point
 temperature and the measured internal temperature. 
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width = \textwidth]{Plots/Exp_settemp.pdf}
-    \caption{Measured vs setpoint temperature of the HVAC for Experiment 7}
+    \caption{Measured vs set point temperature of the HVAC for Experiment 7}
     \label{fig:Polydome_exp7_settemp}
 \end{figure}
 
 A few observations can be made on these measurements. First, the second
 compressor is indeed turned on during the first part of the experiment, when the
-setpoint differs greatly from the measured temperature. Second, for the
+set point differs greatly from the measured temperature. Second, for the
 beginning of Experiment 7, as well as the majority of the other experiments, the
-setpoint temperature is the value that gets changed in order to excite the
-system, and since the HVAC's controller is on during identification, it will
-oscillate between using one or two compressors. Lastly, it is possible to notice
-that the HVAC is not turned on during the night, with the exception of the
-external fan, which runs continuously.
+set point temperature is the value that gets changed in order to excite the
+system, and since the \acrshort{hvac}'s controller is on during identification,
+it will oscillate between using one or two compressors. Lastly, it is possible
+to notice that the HVAC is not turned on during the night, with the exception of
+the external fan, which runs continuously.
 
 \subsubsection{The CARNOT WDB weather data format}\label{sec:CARNOT_WDB}
 
-For a corect simulation of the building behaviour, CARNOT requires not only the
+For a correct simulation of the building behaviour, CARNOT requires not only the
 detailed definition of the building blocks/nodes, but also a very detailed set
 of data on the weather conditions. This set includes detailed information on the
-sun's position throughout the simulation (zenith and azimuth angles), the Direct
-Normal Irradiance (DHI) and Direct Horizontal Irradiance (DNI), direct and
-diffuse solar radiation on surface, as well as information on the ambient
-temperature, humidity, precipitation, pressure, wind speed and direction, etc.
-A detailed overview of each measurement necessary for a simulation is given in
-the CARNOT user manual~\cite{CARNOTManual}.
+sun's position throughout the simulation (zenith and azimuth angles), the
+\acrfull{dhi} and \acrfull{dni}, direct and diffuse solar radiation on surface,
+as well as information on the ambient temperature, humidity, precipitation,
+pressure, wind speed and direction, etc.  A detailed overview of each
+measurement necessary for a simulation is given in the CARNOT user
+manual~\cite{CARNOTManual}.
 
 In order to compare the CARNOT model's performance to that of the real \pdome\
 it is necessary to simulate the CARNOT model under the same set of conditions as
@@ -510,8 +510,8 @@ inferred from the available data.
 The information on the zenith and azimuth solar angles can be computed exactly
 if the position and elevation of the building are known. The GPS coordinates and
 elevation information is found using a map~\cite{ElevationFinder}. With that
-information available, the zenith, azimuth angles, as well as the angle of
-incidence (AOI) are computed using the Python pvlib
+information available, the zenith, azimuth angles, as well as the \acrfull{aoi}
+are computed using the Python pvlib
 library~\cite{f.holmgrenPvlibPythonPython2018}.
 
 As opposed to the solar angles which can be computed exactly from the available
@@ -530,7 +530,7 @@ to compute DHI and DNI as follows:
 \end{equation}
 
 All the other parameters related to solar irradiance, such as the in-plane
-irradiance components, in-plane diffuse irradiances from the sky and the ground
+irradiance components, in-plane diffuse irradiance from the sky and the ground
 are computed using the Python pvlib.
 
 The values that cannot be either calculated or approximated from the available
@@ -553,14 +553,14 @@ or cooling mode.
 
 This information lacking in the existing experimental datasets, the heat
 supplied/ taken out of the system has been inferred from the electrical energy
-use, measured building temperature and HVAC temperature setpoint, with the
+use, measured building temperature and HVAC temperature set point, with the
 assumption that the HVAC is in cooling mode whenever the measurements are
-higher than the setpoint temperature, and is in heating mode otherwise. As it
+higher than the set point temperature, and is in heating mode otherwise. As it
 can already be seen in Figure~\ref{fig:Polydome_exp7_settemp}, this is a very
 strong assumption, that is not necessarily always correct. It works well when
-the measurements are very different from the sepoint, as is the case in the
+the measurements are very different from the set point, as is the case in the
 first part of the experiment, but this assumption is false for the second part
-of the experiment, where the sepoint temperature remains fixed and it is purely
+of the experiment, where the set point temperature remains fixed and it is purely
 the HVAC's job to regulate the temperature.
 
 \begin{figure}[ht]
@@ -581,7 +581,7 @@ to an overestimated value of the Air Exchange Rate, underestimated amount of
 furniture in the building, or, more probably, miscalculation of the HVAC's
 heating/cooling mode. Of note is the large difference in behaviour for the
 Experiments 5 and 6. In fact, for these experiments, the values for the
-electical power consumption greatly differ in shape from the ones presented in
+electrical power consumption greatly differ in shape from the ones presented in
 the other datasets, which could potentially mean erroneous measurements, or some
 other underlying problem with the data.
 
@@ -593,6 +593,5 @@ provided/extracted, the amount of furniture in the building, the overall shape
 and size of the building, as well as possibly errors in the experimental data
 used for validation. A more detailed analysis of the building parameters would
 have to be done in order to find the reason and eliminate these discrepancies.
-
 
 \clearpage

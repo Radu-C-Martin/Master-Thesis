@@ -11,7 +11,7 @@ behaviour.
 
 The advantage of black-box models lies in the lack of physical parameters to be
 fitted. On the flip side, this versatility of being able to fit much more
-complex models putely on data comes at the cost of having to properly define the
+complex models purely on data comes at the cost of having to properly define the
 model hyperparameters: the number of regressors, the number of autoregressive
 lags for each class of inputs, the shape of the covariance function have to be
 taken into account when designing a \acrshort{gp} model. These choices have
@@ -30,7 +30,7 @@ inside} the CARNOT building. This is a suitable choice for the \acrshort{ocp}
 defined in Section~\ref{sec:mpc_problem}, where the goal is tracking as close as
 possible the inside temperature of the building.
 
-The input of the \acrshort{gp} model conincides with the input of the CARNOT
+The input of the \acrshort{gp} model coincides with the input of the CARNOT
 building, namely the \textit{power} passed to the idealized \acrshort{hvac},
 which is held constant during the complete duration of a step.
 
@@ -73,7 +73,7 @@ properly chosen kernel can impose a prior desired behaviour on the
 \acrshort{gp} such as continuity of the function an its derivatives,
 periodicity, linearity, etc. On the flip side, choosing the wrong kernel can
 make computations more expensive, require more data to learn the proper
-behaviour or outright be numerically instable and/or give erroneous predictions.
+behaviour or outright be numerically unstable and/or give erroneous predictions.
 
 The \acrlong{se} kernel (cf. Section~\ref{sec:Kernels}) is very versatile,
 theoretically being able to fit any continuous function given enough data. When
@@ -88,7 +88,7 @@ Kernel~\cite{jainLearningControlUsing2018}, Squared Exponential Kernel and
 Kernels from the M\`atern family~\cite{massagrayThermalBuildingModelling2016}.
 
 For the purpose of this project the choice has been made to use the
-\textit{\acrlong{se} Kernel}, as it provides a very good balance of versatily
+\textit{\acrlong{se} Kernel}, as it provides a very good balance of versatility
 and computational complexity for the modelling of the CARNOT building.
 
 \subsection{Lengthscales}\label{sec:lengthscales}
@@ -125,10 +125,10 @@ difference the value of relative lengthscale importance is introduced:
 
 Another indicator of model behaviour is the variance of the identified
 \acrshort{se} kernel. The expected value of the variance is around the variance
-of the inputs. An extremenly high or extremely low value of the variance could
+of the inputs. An extremely high or extremely low value of the variance could
 mean a numerically unstable model.
 
-Table~\ref{tab:GP_hyperparameters} presents the relative lengthscale imporances
+Table~\ref{tab:GP_hyperparameters} presents the relative lengthscale importances
 and the variance for different combinations of the exogenous input lags ($l_w$),
 the controlled input lags ($l_u$) and the output lags ($l_y$) for a classical
 \acrshort{gp} model. 
@@ -168,7 +168,7 @@ the controlled input lags ($l_u$) and the output lags ($l_y$) for a classical
 In general, the results of Table~\ref{tab:GP_hyperparameters} show that the
 past outputs are important when predicting future values. Of importance is also
 the past inputs, with the exception of the models with very high variance, where
-the relative importances stay almost constant accross all the inputs. For the
+the relative importances stay almost constant across all the inputs. For the
 exogenous inputs, the outside temperature ($w2$) is generally more important
 than the solar irradiation ($w1$). In the case of more autoregressive lags for
 the exogenous inputs, the more recent information is usually more important,
@@ -220,10 +220,10 @@ presented in Table~\ref{tab:SVGP_hyperparameters}:
 \label{tab:SVGP_hyperparameters}
 \end{table}
 
-The results of Table~\ref{tab:SVGP_hyperparameters} are not very suprising, even
+The results of Table~\ref{tab:SVGP_hyperparameters} are not very surprising, even
 if very different from the classical \acrshort{gp} case. The kernel variance is
 always of a reasonable value, and the relative importance of the lengthscales is
-relatively constant accross the board. It is certainly harder to interpret these
+relatively constant across the board. It is certainly harder to interpret these
 results as pertaining to the relevance of the chosen regressors. For the
 \acrshort{svgp} model, the choice of the autoregressive lags has been made
 purely on the values of the loss functions, presented in
@@ -264,11 +264,11 @@ While the \acrshort{rmse} and the \acrshort{smse} are very good at ensuring the
 predicted mean value of the Gaussian Process is close to the measured values of
 the validation dataset, the confidence of the Gaussian Process prediction is
 completely ignored. In this case two models predicting the same mean values, but
-having very differnt confidence intervals would be equivalent according to these
+having very different confidence intervals would be equivalent according to these
 performance metrics.
 
 The \acrfull{lpd} is a performance metric which takes into account not only the
-the mean value of the GP prediction, but the entire distribution:
+mean value of the GP prediction, but the entire distribution:
 
 \begin{equation}
     \text{LPD} = \frac{1}{2} \ln{\left(2\pi\right)} + \frac{1}{2N}
@@ -283,7 +283,7 @@ overconfident models get penalized more than the more conservative models for
 the same mean prediction error, leading to models that better represent
 the real system. 
 
-The \acrfull{msll} is obtained by substacting the loss of the model that
+The \acrfull{msll} is obtained by subtracting the loss of the model that
 predicts using a Gaussian with the mean $E(\boldsymbol{y})$ and variance
 $\sigma_y^2$ of the measured data from the model \acrshort{lpd} and taking the
 mean of the obtained result:
@@ -334,19 +334,17 @@ number of different lag combinations give rise to models with very large
 \acrshort{msll}/\acrshort{lpd} values. This might indicate that those models are
 overconfident, either due to the very large kernel variance parameter, or the
 specific lengthscales combinations. The model with the best
-\acrshort{rmse}/\acrshort{smse} metrics $\mathcal{M}$($l_w = 1$, $l_u = 2$, $l_y
-= 3$) had very bad \acrshort{msll} and \acrshort{lpd} metrics, as well as by far
-the largest variance of all the combinations. On the contrary the
-$\mathcal{M}$($l_w = 3$, $l_u = 1$, $l_y = 3$) model has the best
-\acrshort{msll} and \acrshort{lpd} performance, while still maintaining small
-\acrshort{rmse} and \acrshort{smse} values. The inconvenience of this set of
-lags is the large number of regressors, which leads to much more expensive
+\acrshort{rmse}/\acrshort{smse} metrics \model{1}{2}{3} had very bad
+\acrshort{msll} and \acrshort{lpd} metrics, as well as by far the largest
+variance of all the combinations. On the contrary the \model{3}{1}{3} model has
+the best \acrshort{msll} and \acrshort{lpd} performance, while still maintaining
+small \acrshort{rmse} and \acrshort{smse} values. The inconvenience of this set
+of lags is the large number of regressors, which leads to much more expensive
 computations. Other good choices for the combinations of lags are
-$\mathcal{M}$($l_w = 2$, $l_u = 1$, $l_y = 3$) and $\mathcal{M}$($l_w = 1$, $l_u
-= 1$, $l_y = 3$), which have good performance on all four metrics, as well as
-being cheaper from a computational perspective. In order to make a more informed
-choice for the best hyperparamerers, the performance of all three combinations
-has been analysed.
+\model{2}{1}{3} and \model{1}{1}{3}, which have good performance on all four
+metrics, as well as being cheaper from a computational perspective. In order to
+make a more informed choice for the best hyperparameters, the performance of all
+three combinations has been analysed.
 
 \clearpage
 
@@ -375,20 +373,18 @@ has been analysed.
 \end{table}
 
 The results for the \acrshort{svgp} model, presented in
-Table~\ref{tab:SVGP_loss_functions} are much less ambiguous. The
-$\mathcal{M}$($l_w = 1$, $l_u = 2$, $l_y = 3$) model has the best performance
-according to all four metrics, with most of the other combinations scoring much
-worse on the \acrshort{msll} and \acrshort{lpd} loss functions. This has
-therefore been chosen as the model for the full year simulations.
+Table~\ref{tab:SVGP_loss_functions} are much less ambiguous. The \model{1}{2}{3}
+model has the best performance according to all four metrics, with most of the
+other combinations scoring much worse on the \acrshort{msll} and \acrshort{lpd}
+loss functions. This has therefore been chosen as the model for the full year
+simulations.
 
 
-\subsection{Validation of hyperparameters}
+\subsection{Validation of hyperparameters}\label{sec:validation_hyperparameters}
 
-% TODO: [Hyperparameters] Validation of hyperparameters
-
-The validation step has the purpose of testing the fiability of the trained
+The validation step has the purpose of testing the viability of the trained
 models. If choosing a model according to loss function values on a new dataset
-is a way of minimizing the possibility of overfitting the model to the training
+is a way of minimizing the possibility of over fitting the model to the training
 data, validating the model by analyzing its multi-step prediction performance
 ensures the model was able to learn the correct dynamics and is useful in
 simulation scenarios.
@@ -402,55 +398,103 @@ the discrepancies.
 
 \subsubsection{Conventional Gaussian Process}
 
+The simulation performance of the three lag combinations chosen for the
+classical \acrlong{gp} models has been analysed, with the results presented in
+Figures~\ref{fig:GP_113_multistep_validation},~\ref{fig:GP_213_multistep_validation}
+and~\ref{fig:GP_313_multistep_validation}. For reference, the one-step ahead
+predictions for the training and test datasets are presented in
+Appendix~\ref{apx:hyperparams_gp}.
+
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width =
     \textwidth]{Plots/GP_113_-1pts_test_prediction_20_steps.pdf}
-    \caption{}
-    \label{fig:GP_multistep_validation}
+    \vspace{-25pt}
+    \caption{20-step ahead simulation for \model{1}{1}{3}}
+    \label{fig:GP_113_multistep_validation}
 \end{figure}
+
+In the case of the simplest model (cf.
+Figure~\ref{fig:GP_113_multistep_validation}), overall the predictions are quite
+good. The large deviation from true values starts happening at around 15 steps.
+This could impose an additional limit on the size of the control horizon of the
+\acrlong{ocp}.
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width =
     \textwidth]{Plots/GP_213_-1pts_test_prediction_20_steps.pdf}
-    \caption{}
+    \vspace{-25pt}
+    \caption{20-step ahead simulation for \model{2}{1}{3}}
     \label{fig:GP_213_multistep_validation}
 \end{figure}
+
+The more complex model, presented in
+Figure~\ref{fig:GP_213_multistep_validation} has a much better prediction
+performance, with only two predictions out of a total of twenty five diverging
+at the later steps. Except for the late-stage divergence on the two predictions,
+this proves to be the best simulation model.
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width =
     \textwidth]{Plots/GP_313_-1pts_test_prediction_20_steps.pdf}
-    \caption{}
+    \vspace{-25pt}
+    \caption{20-step ahead simulation for \model{3}{1}{3}}
     \label{fig:GP_313_multistep_validation}
 \end{figure}
 
+Lastly, \model{3}{1}{3} has a much worse simulation performance than the other
+two models. This could hint at an over fitting of the model on the training data.
+This is consistent with the results found in Table~\ref{tab:GP_loss_functions}
+for the \acrshort{rmse} and \acrshort{smse}, as well as can be seen in
+Appendix~\ref{apx:hyperparams_gp}, Figure~\ref{fig:GP_313_test_validation},
+where the model has much worse performance on the testing dataset predictions
+than the other two models.
+
+Overall, the performance of the three models in simulation mode is consistent
+with the previously found results. It is of note that neither the model that
+performed the best on the \acrshort{rmse}/\acrshort{smse}, \model{1}{2}{3}, nor
+the one that had the best \acrshort{msll}/\acrshort{lpd}, perform the best under
+a simulation scenario. In the case of the former it is due to numerical
+instability, the training/ prediction often failing depending on the inputs. On
+the other hand, in the case of the latter, only focusing on the
+\acrshort{msll}/\acrshort{lpd} performance metrics can lead to over fitted
+models, that give good and confident one-step ahead predictions, while still
+unable to fit the true behaviour of the plant.
+
 \clearpage
 
-\subsubsection{Sparse and Variational Gaussian Process}
+    \subsubsection{Sparse and Variational Gaussian Process}
 
-%\begin{figure}[ht]
-%    \centering
-%    \includegraphics[width = \textwidth]{Plots/SVGP_123_training_performance.pdf}
-%    \caption{}
-%    \label{fig:SVGP_train_validation}
-%\end{figure}
-%
-%\begin{figure}[ht]
-%    \centering
-%    \includegraphics[width = \textwidth]{Plots/SVGP_123_test_performance.pdf}
-%    \caption{}
-%    \label{fig:SVGP_test_validation}
-%\end{figure}
+For the \acrshort{svgp} models, only the performance of \model{1}{2}{3} was
+investigated, since it had the best performance according to all four loss
+metrics. 
+
+As a first validation step, it is of note that the \acrshort{svgp} model was
+able to accurately reproduce the training dataset with only 150 inducing
+locations (cf.  Appendix~\ref{apx:hyperparams_svgp}). It also performs about as
+well as the better \acrshort{gp} models for the one step prediction on the
+testing datasets.
+
+In the case of the simulation performance, presented in
+Figure~\ref{fig:SVGP_multistep_validation}, two things are of particular
+interest. First, all 25 simulations have good overall behaviour --- there are no
+simulations starting to exhibit erratic behaviour --- this is a good indicator
+for lack of over fitting. This behaviour is indicative of a more conservative
+model than the ones identified for the \acrshort{gp} models. It is also possible
+to conclude that given the same amount of data, the classical \acrshort{gp}
+models can better learn plant behaviour, provided the correct choice of
+regressors.
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width =
     \textwidth]{Plots/SVGP_123_test_prediction_20_steps.pdf}
-    \caption{}
+    \caption{20-step ahead simulation for \model{1}{2}{3}}
     \label{fig:SVGP_multistep_validation}
 \end{figure}
+
 
 \clearpage
