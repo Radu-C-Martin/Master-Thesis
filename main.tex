@@ -98,6 +98,7 @@ temperature control}
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \setlength\headheight{35pt}
+\setlength\footskip{13.6pt}
 \fancyhf{Multi-season GP performance for buildings}
 \rhead{\includegraphics[width=2cm]{Logo-EPFL.png}}
 \lhead{}
@@ -127,16 +128,14 @@ temperature control}
 \clearpage
 
 \input{10_Introduction.tex}
-\input{20_Previous_Research.tex}
 \input{30_Gaussian_Processes_Background.tex}
 \input{40_CARNOT_model.tex}
 \input{50_Choice_of_Hyperparameters.tex}
 \input{60_The_MPC_Problem.tex}
 \input{70_Implementation.tex}
 \input{80_Results.tex}
-\input{90_Further_Research.tex}
-\input{95_Conclusion.tex}
-\printbibliography
+\input{90_Conclusion.tex}
+\printbibliography[heading=bibintoc]
 \appendix
 \input{99A_GP_hyperparameters_validation.tex}
 \input{99C_hyperparameters_results.tex}

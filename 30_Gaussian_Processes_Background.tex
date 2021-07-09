@@ -36,7 +36,7 @@ to the given prior:
     \begin{bmatrix}
         \mathbf{f} \\
         \mathbf{f_*} \\
-    \end{bmatrix} = 
+    \end{bmatrix} \sim
     \mathcal{N}\left(
         \mathbf{0}, 
         \begin{bmatrix}
@@ -53,7 +53,7 @@ In the case of noisy observations, assuming $y = f + \epsilon$  with $\epsilon
     \begin{bmatrix}
         \mathbf{y} \\
         \mathbf{f_*} \\
-    \end{bmatrix} = 
+    \end{bmatrix} \sim
     \mathcal{N}\left(
         \mathbf{0}, 
         \begin{bmatrix}
@@ -69,7 +69,7 @@ which, for the rest of the section, will be used in the abbreviated form:
     \begin{bmatrix}
         \mathbf{y} \\
         \mathbf{f_*} \\
-    \end{bmatrix} = 
+    \end{bmatrix} \sim
     \mathcal{N}\left(
         \mathbf{0}, 
         \begin{bmatrix}
@@ -96,7 +96,7 @@ value that gets maximized is the log of Equation~\ref{eq:gp_likelihood}, the log
 marginal likelihood:
 
 \begin{equation}\label{eq:gp_log_likelihood}
-    log(p(y)) = - \frac{1}{2}\log{\left(
+    \log(p(y)) = - \frac{1}{2}\log{\left(
                                 \det{\left(
                                         K + \sigma_n^2I
                                 \right)}
@@ -172,7 +172,7 @@ $\mathbf{x'}$'s dimensions:
 where $w_d = \frac{1}{l_d^2}; d = 1 ,\dots, D$, with D being the dimension of the
 data.
 
-The special case of $\Lambda^{-1} = \text{diag}{\left([l_1^{-2},\dots,l_D^{-2}]\right)}$
+This special case of $\Lambda^{-1} = \text{diag}{\left([l_1^{-2},\dots,l_D^{-2}]\right)}$
 is equivalent to implementing different lengthscales on different regressors.
 This can be used to asses the relative importance of each regressor through the
 value of the hyperparameters. This is the \acrfull{ard} property.
@@ -207,7 +207,7 @@ without inquiring the penalty of inverting the covariance matrix. An overview
 and comparison of multiple methods is given
 at~\cite{liuUnderstandingComparingScalable2019}.
 
-For the scope of this project the choice of using the \acrfull{svgp} models has
+For the scope of this project, the choice of using the \acrfull{svgp} models has
 been made, since it provides a very good balance of scalability, capability,
 robustness and controllability~\cite{liuUnderstandingComparingScalable2019}.
 
@@ -230,9 +230,9 @@ $f(X_s)$, usually denoted as $f_s$ is introduced, with the requirement that this
 new dataset has size $n_s$  smaller than the size $n$ of the original dataset. 
 
 The $X_s$ are called \textit{inducing locations}, and $f_s$ --- \textit{inducing
-random variables}. They are said to summarize the data in the sense that a model
-trained on this new dataset should be able to generate the original dataset with
-a high probability.
+random variables}. They summarize the data in the sense that a model trained on
+this new dataset should be able to generate the original dataset with a high
+probability.
 
 The multivariate Gaussian distribution is used to establish the relationship
 between $f_s$ and $f$, which will serve the role of the prior, now called the
@@ -242,7 +242,7 @@ sparse prior:
     \begin{bmatrix}
         \mathbf{f}(X) \\
         \mathbf{f}(X_s) \\
-    \end{bmatrix} = 
+    \end{bmatrix} \sim
     \mathcal{N}\left(
         \mathbf{0}, 
         \begin{bmatrix}
@@ -267,8 +267,8 @@ computationally tractable on larger sets of data.
 The following derivation of the \acrshort{elbo} is based on the one presented
 in~\cite{yangUnderstandingVariationalLower}.
 
-Assume $X$ to be the observations, and $Z$ the set of hidden (latent)
-variables --- the parameters of the \acrshort{gp} model. The posterior
+Assume $X$ to be the observations, and $Z$ the set parameters of the
+\acrshort{gp} model, also known as the latent variables. The posterior
 distribution of the hidden variables can be written as follows:
 
 \begin{equation}
@@ -337,7 +337,10 @@ The \acrfull{noe} uses the past predictions $\hat{y}$ for future predictions:
     f(w(k-1),\dots,w(k-l_w),\hat{y}(k-1),\dots,\hat{y}(k-l_y),u(k-1),\dots,u(k-l_u))
 \end{equation}
 
-The \acrshort{noe} structure is therefore a \textit{simulation model}.
+Due to its use for multi-step ahead simulation of system behaviour, as opposed
+to only predicting one state ahead using current information, the \acrshort{noe}
+structure can be considered a \textit{simulation model}.
+
 
 In order to get the best simulation results from a \acrshort{gp} model, the
 \acrshort{noe} structure would have to be employed. Due to the high algorithmic

@@ -21,13 +21,13 @@ in the \acrshort{wdb} object is given in Section~\ref{sec:CARNOT_WDB}.
 \subsection{Simulink Model}
 
 The secondary functions of the Simulink model is the weather prediction, as well
-as communication with the Python controller. A complete schema of the Simulink
-setup is presented in Figure~\ref{fig:Simulink_complete}.
+as communication with the Python controller. A complete schematic of the
+Simulink setup is presented in Figure~\ref{fig:Simulink_complete}.
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width = 0.75\textwidth]{Images/polydome_python.pdf}
-    \caption{Simulink Schema of the Complete Simulation}
+    \caption{Simulink diagram of the Complete Simulation}
     \label{fig:Simulink_complete}
 \end{figure}
 
@@ -158,7 +158,7 @@ Let $w_l$, $u_l$, and $y_l$ be the lengths of the state vector components
 $\mathbf{w}$, $\mathbf{u}$, $\mathbf{y}$ (cf. Equation~\ref{eq:components}).
 Also, let X be the matrix of all the system states over the optimization horizon
 and W be the matrix of the predicted disturbances for all the future steps. The
-original \acrlong{ocp} can be rewritten as:
+original \acrlong{ocp} can be rewritten using index notation as:
 
 \begin{subequations}\label{eq:sparse_optimal_control_problem}
     \begin{align}
@@ -174,7 +174,7 @@ original \acrlong{ocp} can be rewritten as:
     \end{align}
 \end{subequations}
 
-\subsection{Python server}
+\subsection{Model Identification and Update using a Python server}
 
 The Python server is responsible for the control part of the simulation. It
 delegates which controller is active, is responsible for training and updating
@@ -182,16 +182,16 @@ the \acrshort{gp} and \acrshort{svgp} models, as well as keeping track of all
 the intermediate results for analysis.
 
 In the beginning of the experiment there is no information available on the
-building's thermal behaviour. For this part of the simulation, the controller
+building's thermal behaviour. For this part of the simulation, the server
 switches to a \acrshort{pi} controller with random disturbances until it gathers
-enough data to train a \acrshort{gp} model. This ensured that the building is
+enough data to train a \acrshort{gp} model. This ensures that the building is
 sufficiently excited to capture its dynamics, while maintaining the temperature
 within an acceptable range (~15 --- 25 $\degree$C).
 
 Once enough data has been captured all the features are first scaled to the
 range [-1, 1] in order to reduce the possibility of numerical instabilities. The
-Python controller then trains the \acrshort{gp} model and switches to tracking
-the appropriate SIA 180:2014 reference temperature (cf.
+Python server then trains the \acrshort{gp} model and switches to tracking the
+appropriate SIA 180:2014 reference temperature (cf.
 Section~\ref{sec:reference_temperature}).
 
 For the case of the \acrshort{svgp}, a new model is trained once enough data is

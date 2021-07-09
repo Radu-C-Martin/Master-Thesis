@@ -1,5 +1,7 @@
 \section{Introduction}
 
+\subsection{Motivation}
+
 Buildings are a major consumer of energy, with more than 25\% of the total
 energy consumed in the EU coming from residential
 buildings~\cite{tsemekiditzeiranakiAnalysisEUResidential2019}. Combined with a
@@ -18,10 +20,88 @@ Gaussian Processes have been previously used to model building dynamics, but
 they are usually limited by a fixed computational budget. This limits the
 approaches that can be taken for identification and update of said models.
 Learning \acrshort{gp} models have also been previously used in the context of
-autonomous racing cars, but there the Sparse \acrshort{gp} model was built on
-top of a white-box model and only responsible for fitting the unmodeled
-dynamics. 
+autonomous racing cars \cite{kabzanLearningBasedModelPredictive2019}, but there
+the Sparse \acrshort{gp} model was built on top of a white-box model and only
+responsible for fitting the unmodeled dynamics. 
 
-This project means to provide a further expansion of the use of black-box
-\acrlong{gp} Models in the context of building control, through online learning
-of building dynamics at new operating points as more data gets collected.
+\subsection{Previous Research}
+With the increase in computational power and availability of data  over time,
+the accessibility of data-driven methods for system identification and control
+has also risen significantly. 
+
+The idea of using Gaussian Processes as regression models for control of dynamic
+systems is not new, and has already been explored a number of times. A general
+description of their use, along with the necessary theory and some example
+implementations is given in~\cite{kocijanModellingControlDynamic2016}.
+In~\cite{pleweSupervisoryModelPredictive2020}, a \acrlong{gp} Model with a
+\acrlong{rq} Kernel is used for temperature set point optimization.
+
+Gaussian Processes for building control have also been studied before in the
+context of Demand Response~\cite{nghiemDatadrivenDemandResponse2017,
+jainLearningControlUsing2018}, where the buildings are used for their heat
+capacity in order to reduce the stress on energy providers during peak load
+times.
+
+There are, however, multiple limitations with these approaches. 
+In~\cite{nghiemDatadrivenDemandResponse2017} the model is only identified once,
+ignoring changes in weather or plant parameters, which could lead to different
+dynamics. This is addressed in \cite{jainLearningControlUsing2018} by
+re-identifying the model every two weeks using new information. Another
+limitation is that of the scalability of the \acrshort{gp}s, which become
+prohibitively expensive from a computational point of view when too much data is
+added.
+
+Outside of the context of building control, Sparse \acrlong{gp}es have been used
+in autonomous racing in order to complement the physics-based model by fitting
+the unmodeled dynamics of the
+system~\cite{kabzanLearningBasedModelPredictive2019}.
+
+\subsection{Contribution}
+
+The ability to learn the plant's behaviour in new regions is very helpful in
+maintaining model performance over time, as its behaviour starts deviating and
+the original identified model goes further and further into the extrapolated
+regions.
+
+This project tries to combine the use of online learning control schemes with
+\acrlong{gp} Models through implementing \acrlong{svgp} Models. \acrshort{svgp}s
+provide means of extending the use of \acrshort{gp}s to larger datasets, thus
+enabling the periodic re-training of the model to include all the historically
+available data.
+
+\subsection{Project Outline}
+
+The main body of work can be divided in two parts: the development of a computer
+model of the \pdome\ building and the synthesis, validation and comparison of
+multiple control schemes using both classical \acrshort{gp}s, as well as
+\acrshort{svgp}s.
+
+Section~\ref{sec:gaussian_processes} provides the mathematical background for
+understanding \acrshort{gp}s, as well as the definition in very broad strokes of
+\acrshort{svgp}s and their differences from the classical implementation of
+\acrlong{gp}es. This information is later used for comparing their performances
+and outlining their respective pros and cons.
+
+Section~\ref{sec:CARNOT} goes into the details of the implementation of the
+\pdome\ computer model. The structure of the CARNOT model is described, and all
+the parameters required for the simulation are either directly sourced from
+existing literature, computed from available values or estimated using publicly
+available data from \textit{Google Maps}~\cite{GoogleMaps}.
+
+Following that, Section~\ref{sec:hyperparameters} discusses the choice of the
+hyperparameters for the \acrshort{gp} and \acrshort{svgp} models respectively in
+the context of their multi-step ahead simulation performance.
+
+The \acrlong{ocp} implemented in the \acrshort{mpc} controller is described in
+Section~\ref{sec:mpc_problem}, followed by a description of the complete
+controller implementation in Python in Section~\ref{sec:implementation}.
+
+Section~\ref{sec:results} presents and analyzes the results of full-year
+simulations for both \acrshort{gp} and \acrshort{svgp} models. A few variations
+on the initial \acrshort{svgp} model are further analyzed in order to identify
+the most important parameteres for long time operation.
+
+Finally, Section~\ref{sec:further_research} discusses the possible improvements
+to both the current \acrshort{gp} and \acrshort{svgp} implementations.
+
+\clearpage

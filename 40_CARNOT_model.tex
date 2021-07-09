@@ -94,7 +94,7 @@ Table~\ref{tab:GIMP_measurements}:
         \hline
         Object & Size [px] & Size[mm] & Size[m]\\
         \hline \hline
-        acrshort{hvac} height & 70 & 2100 & 2.1 \\
+        \acrshort{hvac} height & 70 & 2100 & 2.1 \\
         Building height & 230 & 6900 & 6.9 \\
         Stem wall & 45 & 1350 & 1.35 \\
         Dome height & 185 & 5550 & 5.55 \\
@@ -174,13 +174,13 @@ The stem of the \pdome\ is approximated to a cube of edge 25m, and its volume ca
 therefore be calculated as: 
 
 \begin{equation}
-    V_s = l_s^2 * h_s
+    V_s = l_s^2 \times h_s
 \end{equation}
 
 The total volume of the building is then given as: 
 
 \begin{equation}
-    V = V_d + V_s = \frac{1}{6} \pi h (3r^2 + h^2) + l_s^2 * h_s
+    V = V_d + V_s = \frac{1}{6} \pi h (3r^2 + h^2) + l_s^2 \times h_s
 \end{equation}
 
 Numerically, considering a dome diameter of 28m, a dome height of 5.55m and a stem
@@ -199,7 +199,7 @@ Exchange Rate, presented in Section~\ref{sec:Air_Exchange_Rate}.
 The main function of the \pdome\ building is serving as a classroom for around
 one hundred students. It has wood furniture consisting of chairs and tables, as
 well as a wooden stage in the center of the building, meant to be used for
-presentations. The building also contains a smaller room, housing the all the
+presentations. The building also contains a smaller room, housing all the
 necessary technical equipment (cf. Figure~\ref{fig:Google_Maps_Streetview}).
 
 The most accurate way of including information on the furniture in the CARNOT
@@ -233,7 +233,15 @@ has a surface area of:
 
 \begin{equation}
     S_f = \frac{1}{4} \cdot 1.8 \left[\frac{\text{m}^2}{\text{m}^2}\right]
-    \cdot 625\ \left[\text{m}^2\right] = 140\ \left[\text{m}^2\right]
+    \cdot 625\ \left[\text{m}^2\right] = 281.25 \left[\text{m}^2\right]
+\end{equation}
+
+Since a wall has two large faces, the total surface gets divided between them
+for a surface of each face of: 
+
+\begin{equation}
+    S_{f, \text{face}} = 
+    \frac{1}{2} \times S_f \approx 140 \left[\text{m}^2\right]
 \end{equation}
 
 \subsubsection*{Mass}
@@ -270,8 +278,9 @@ The last parameter of the furniture equivalent wall is computed by dividing its
 volume by the surface:
 
 \begin{equation}
-    h_f = \frac{V_f}{S_f} = \frac{10.41}{140} \left[\frac{m^3}{m^2}\right] =
-    0.075\ \left[\text{m}\right] = 7.5\ \left[\text{cm}\right]
+    h_f = \frac{V_f}{S_{f, \text{face}}} 
+    = \frac{10.41}{140} \left[\frac{m^3}{m^2}\right]
+    = 0.075\ \left[\text{m}\right] = 7.5\ \left[\text{cm}\right]
 \end{equation}
 
 
@@ -284,7 +293,7 @@ parameters for each of the CARNOT nodes' properties.
 
 \subsubsection{Windows}
 
-The windows are supposed to be made of two glass panes of thickness 4mm each.
+The windows are made of two glass panes of thickness 4mm each.
 
 The values of the heat transfer coefficient (U-factor) can vary greatly for
 different window technologies, but an educated guess can be made on the lower
@@ -345,8 +354,8 @@ Table~\ref{tab:material_properties}:
 \centering
     \begin{tabular}{||c c c c||}
         \hline
-        Material & Thermal Conductivity $[k]$ $[\frac{W}{mK}]$ & Specific Heat
-        Capacity $[c]$ $[\frac{J}{kgK}]$ & Density $[\rho]$ $[\frac{kg}{m^3}]$
+        Material & Thermal Conductivity $k$ $[\frac{W}{mK}]$ & Specific Heat
+        Capacity $c$ $[\frac{J}{kgK}]$ & Density $\rho$ $[\frac{kg}{m^3}]$
         \\
         \hline \hline
         Plywood & 0.12 & 1210 & 540 \\
@@ -375,7 +384,7 @@ the cases where the full cooling capacity is not required.
 \subsubsection*{Ventilation}
 
 According to the manufacturer manual \cite{aermecRoofTopManuelSelection}, the
-\acrshort{hvac} unit's external fan has an air debit ranging between 4900
+\acrshort{hvac} unit's external fan has an air flow ranging between 4900
 $\text{m}^3/\text{h}$ and 7000 $\text{m}^3/\text{h}$.
 
 \subsubsection*{Air Exchange Rate}\label{sec:Air_Exchange_Rate}
@@ -467,12 +476,13 @@ compressors. The instruction manual of the
 \acrshort{hvac}~\cite{aermecRoofTopManuelSelection} notes that in summer only
 one of the compressors is running. This allows for a larger \acrshort{eer} value
 and thus better performance. We can see that this is the case for most of the
-experiment, where the power consumption caps at around 6~kW. There are, however,
-moments during the first part of the experiment where the power momentarily
-peaks over the 6~kW limit, and goes as high as around 9~kW. This most probably
-happens when the \acrshort{hvac} decides that the difference between the set
-point temperature and the actual measured values is too large to compensate with
-a single compressor.
+experiment, where the power consumption caps at around 6~kW, which is the
+maximum power consumption of one compressor. There are, however, moments during
+the first part of the experiment where the power momentarily peaks over the 6~kW
+limit, and goes as high as around 9~kW. This most probably happens when the
+\acrshort{hvac} decides that the difference between the set point temperature
+and the actual measured values is too large to compensate with a single
+compressor.
 
 Figure~\ref{fig:Polydome_exp7_settemp} presents the values of the set point
 temperature and the measured internal temperature. 
@@ -506,7 +516,7 @@ pressure, wind speed and direction, etc.  A detailed overview of each
 measurement necessary for a simulation is given in the CARNOT user
 manual~\cite{CARNOTManual}.
 
-In order to compare the CARNOT model's performance to that of the real \pdome\,
+In order to compare the CARNOT model's performance to that of the real \pdome,
 it is necessary to simulate the CARNOT model under the same set of conditions as
 the ones present during the experimental data collection. In order to do this,
 all the missing values that are required by the simulation have to be filled. In
@@ -540,12 +550,12 @@ All the other parameters related to solar irradiance, such as the in-plane
 irradiance components, in-plane diffuse irradiance from the sky and the ground
 are computed using the Python pvlib.
 
-The values that cannot be either calculated or approximated from the available
+The values that can be neither calculated nor approximated from the available
 data, such as the precipitation, wind direction, incidence angles in place of
 vertical and main/secondary surface axis, have been replaced with the default
 CARNOT placeholder value of -9999. The relative humidity, cloud index, pressure
-and wind speed have been fixed to 50\%, 0.5, 96300 Pa, 0 $\text{m}/\text{s}$
-respectively.
+and wind speed have been fixed to the default CARNOT values of 50\%, 0.5, 96300
+Pa, 0 $\text{m}/\text{s}$ respectively.
 
 \subsubsection{\pdome\ and CARNOT model comparison}\label{sec:CARNOT_comparison}
 

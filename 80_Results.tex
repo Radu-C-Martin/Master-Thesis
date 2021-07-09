@@ -1,17 +1,17 @@
-\section{Results}\label{sec:results}
+\section{Full-year Simulation Results}\label{sec:results}
 
 
 This section focuses on the presentation and interpretation of the year-long
-simulation of the control schemes present previously. All the control schemes
-analysed in this Section have been done with a sampling time of 15 minutes and a
-control horizon of 8 steps.
+simulation of the control schemes presented previously. All the control schemes
+analysed in this Section have used a sampling time of 15 minutes and a control
+horizon of 8 steps.
 
 Section~\ref{sec:GP_results} analyses the results of a conventional
-\acrlong{gp} Model trained on the first five days of gathered data. The models
+\acrlong{gp} Model trained on the first five days of gathered data. The model
 is then used for the rest of the year, with the goal of tracking the defined
 reference temperature.
 
-Section~\ref{sec:SVGP_results} goes into details on the analysis of the Learning
+Section~\ref{sec:SVGP_results} goes into details on the analysis of the learning
 scheme using a \acrshort{svgp} Model. In this scenario, the model is first
 trained on the first five days of data, and updates every day at midnight with
 the new information gathered from closed-loop operation.
@@ -19,7 +19,7 @@ the new information gathered from closed-loop operation.
 \subsection{Conventional Gaussian Processes}\label{sec:GP_results}
 
 The first simulation, to be used as a baseline comparison with the
-\acrshort{svgp} Models developed further consists of using a `static'
+\acrshort{svgp} Models developed further, consists of using a `static'
 \acrshort{gp} model trained on five days worth of experimental data. This model
 is then employed for the rest of the year.
 
@@ -94,7 +94,7 @@ $\degree$C respectively.
 \end{figure}
 
 This large difference of performance could be explained by the change in outside
-weather (Solar Irradiance and Outside Temperature --- the exogenous inputs) from
+weather (solar irradiance and outside temperature --- the exogenous inputs) from
 the one present during the training phase. It can be seen in
 Figure~\ref{fig:Dataset_outside_temperature} that already at 500 points in the
 simulation both the GHI and the Outside Temperature are outside of the training
@@ -143,11 +143,11 @@ at midnight using the newly accumulated data from closed-loop operation.
 The results of this setup are presented in
 Figure~\ref{fig:SVGP_fullyear_simulation}. It can already be seen that this
 setup performs much better than the initial one. The only large deviations from
-the reference temperature are due to cold --- when the \acrshort{hvac}'s limited
-heat capacity is unable to maintain the proper temperature. Additionnaly, the
-\acrshort{svgp} controller takes around 250-300ms of computation time for each
-simulation time, decreasing the computational cost of the original \acrshort{gp}
-by a factor of six.
+the reference temperature are due to cold weather, when the \acrshort{hvac}'s
+limited heat capacity is unable to maintain the proper temperature.
+Additionnaly, the \acrshort{svgp} controller takes around 250 - 300ms of
+computation time for each simulation time, decreasing the computational cost of
+the original \acrshort{gp} by a factor of six.
 
 
 
@@ -161,7 +161,7 @@ by a factor of six.
 
 \clearpage
 
-Comparing the Absolute Error of the Measured vs Reference temperature for the
+Comparing the absolute error of the measured vs reference temperature for the
 duration of the experiment (cf. Figure~\ref{fig:SVGP_fullyear_abserr}) with the
 one of the original experiment, the average absolute error is reduced from 1.33
 $\degree$C to only 0.05 $\degree$C, with the majority of the values being lower
@@ -210,7 +210,7 @@ behaviour of the plant over all the experimental steps in the first two cases.
 It still has a noticeable error when predicting the behaviour of the plant on
 new data (i.e. simulations starting at steps 10750 and 11000), but it is much
 less than before. This gives a hint at the fact that the \acrshort{svgp} model's
-performance ameliorates throughout the year, but it does require much more data
+performance improves throughout the year, but it does require much more data
 than the classical \acrshort{gp} model to capture the building dynamics.
 
 \begin{figure}[ht]
@@ -361,10 +361,10 @@ Analyzing the results of a simulation done on only one day's worth of initial
 simulation data (cf. Figures~\ref{fig:SVGP_96pts_fullyear_simulation}
 and~\ref{fig:SVGP_96pts_abserr}) it is very notable that the model performs
 almost identically to the one identified in the previous sections. This
-nightlights one of the practical benefits of the \acrshort{svgp} implementations
-compared to the classical \acrlong{gp} -- it is possible to start with a more
-rough controller trained on less data and refine it over time, reducing the need
-for cumbersome and potentially costly initial experiments for gathering data.
+highlights one of the practical benefits of the \acrshort{svgp} implementations
+compared to the classical \acrlong{gp} -- it is possible to start with a rougher
+controller trained on less data and refine it over time, reducing the need for
+cumbersome and potentially costly initial experiments for gathering data.
 
 \begin{figure}[ht]
     \centering
@@ -400,7 +400,7 @@ based on closed-loop operation.
 \end{figure}
 
 As it can be seen in Figure~\ref{fig:SVGP_480window_fullyear_simulation}, this
-model is unable to properly track the reference temperature. In fact, five days
+model is unable to exhaustively track the reference temperature. In fact, five days
 after the identification, the model forgets all the initial data and becomes
 unstable. This instability then generates enough excitation of the plant for the
 model, to again learn its behaviour. This cycle repeats every five days, when the
@@ -470,7 +470,7 @@ models can be deployed with less explicit identification data, but they will
 continue to improve over the course of the year, as the building passes through
 different regions of the state space and more data is collected.
 
-These results do not, however, discredit the use of \acrlong{gp} for employment
+However, these results do not discredit the use of \acrlong{gp} for employment
 in a multi-seasonal situation. As shown before, given the same amount of data
 and ignoring the computational cost, they perform better than the alternative
 \acrshort{svgp} models. The bad initial performance could be mitigated by

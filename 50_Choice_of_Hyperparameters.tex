@@ -1,4 +1,4 @@
-\section{Choice of Hyperparameters}
+\section{Choice of Hyperparameters}~\label{sec:hyperparameters}
 
 This section will discuss and try to validate the choice of all the
 hyperparameters necessary for the training of a \acrshort{gp} model to capture
@@ -9,16 +9,14 @@ behaviour directly from data. This comes in contrast to white-box and grey-box
 modelling techniques, which require much more physical insight into the plant's
 behaviour.
 
-The advantage of black-box models lies in the lack of physical parameters to be
-fitted. On the flip side, this versatility of being able to fit much more
-complex models purely on data comes at the cost of having to properly define the
-model hyperparameters: the number of regressors, the number of autoregressive
-lags for each class of inputs, the shape of the covariance function have to be
-taken into account when designing a \acrshort{gp} model. These choices have
-direct influence on the resulting model behaviour and where it can be
-generalized, as well as indirect influence in the form of more time consuming
-computations in the case of larger number of regressors and more complex kernel
-functions.
+On the flip side, this versatility comes at the cost of having to properly
+define the model hyperparameters: the number of regressors, the number of
+autoregressive lags for each class of inputs, the shape of the covariance
+function have to be taken into account when designing a \acrshort{gp} model.
+These choices have direct influence on the resulting model behaviour and where
+it can be generalized, as well as indirect influence in the form of more time
+consuming computations in the case of larger number of regressors and more
+complex kernel functions.
 
 As described in Section~\ref{sec:gp_dynamical_system}, for the purpose of this
 project, the \acrlong{gp} model will be trained using the \acrshort{narx}
@@ -64,7 +62,12 @@ always benefit the \acrshort{gp} model at least not comparably to the
 additional computational complexity.
 
 For the exogenous inputs the choice has therefore been made to take the
-\textit{Global Solar Irradiance} and \textit{Outside Temperature Measurement}.
+\textit{Global Solar Irradiance}\footnotemark and \textit{Outside Temperature
+Measurement}.
+
+\footnotetext{Using the \acrshort{ghi} makes sense in the case of the \pdome\
+building which has windows facing all directions, as opposed to a room which
+would have windows on only one side.}
 
 \subsection{The Kernel}
 
@@ -104,7 +107,7 @@ three lengthscales apart.
     \begin{tabular}{||c c ||}
         \hline
         $\norm{\mathbf{x} - \mathbf{x}'}$ &
-        $\exp{(-\frac{1}{2}*\frac{\norm{\mathbf{x} - \mathbf{x}'}^2}{l^2})}$ \\
+        $\exp{(-\frac{1}{2}\times\frac{\norm{\mathbf{x} - \mathbf{x}'}^2}{l^2})}$ \\
         \hline \hline
         $1l$ & 0.606 \\
         $2l$ & 0.135 \\
@@ -132,6 +135,8 @@ Table~\ref{tab:GP_hyperparameters} presents the relative lengthscale importances
 and the variance for different combinations of the exogenous input lags ($l_w$),
 the controlled input lags ($l_u$) and the output lags ($l_y$) for a classical
 \acrshort{gp} model. 
+
+% TODO: [Lengthscales] Explain lags and w1,1, w2, etc.
 
 \begin{table}[ht]
 %\vspace{-8pt}
@@ -165,15 +170,15 @@ the controlled input lags ($l_u$) and the output lags ($l_y$) for a classical
 \label{tab:GP_hyperparameters}
 \end{table}
 
-In general, the results of Table~\ref{tab:GP_hyperparameters} show that the
-past outputs are important when predicting future values. Of importance is also
-the past inputs, with the exception of the models with very high variance, where
-the relative importances stay almost constant across all the inputs. For the
-exogenous inputs, the outside temperature ($w2$) is generally more important
-than the solar irradiation ($w1$). In the case of more autoregressive lags for
-the exogenous inputs the more recent information is usually more important in
-the case of the solar irradiation, while the second-to-last measurement is
-preffered for the outside temperature.
+In general, the results of Table~\ref{tab:GP_hyperparameters} show that the past
+outputs are important when predicting future values. Of importance is also the
+past inputs, with the exception of the models with very high variance, where the
+relative importances stay almost constant across all the inputs. For example, it
+can be seen that for the exogenous inputs, the outside temperature ($w2$) is
+generally more important than the solar irradiation ($w1$). In the case of more
+autoregressive lags for the exogenous inputs the more recent information is
+usually more important in the case of the solar irradiation, while the
+second-to-last measurement is preffered for the outside temperature.
 
 For the classical \acrshort{gp} model the appropriate choice of lags would be
 $l_u = 1$ and $l_y = 3$ with $l_w$ taking the values of either 1, 2 or 3,
@@ -348,8 +353,6 @@ metrics, as well as being cheaper from a computational perspective. In order to
 make a more informed choice for the best hyperparameters, the simulation
 performance of all three combinations has been analysed.
 
-\clearpage
-
 \begin{table}[ht]
 %\vspace{-8pt}
 \centering
@@ -380,7 +383,6 @@ model has the best performance according to all four metrics, with most of the
 other combinations scoring much worse on the \acrshort{msll} and \acrshort{lpd}
 loss functions. This has, therefore, been chosen as the model for the full year
 simulations.
-
 
 \subsection{Validation of hyperparameters}\label{sec:validation_hyperparameters}
 
@@ -449,10 +451,13 @@ this proves to be the best simulation model.
 
 Lastly, \model{3}{1}{3} has a much worse simulation performance than the other
 two models. This could hint at an over fitting of the model on the training data.
+
+\clearpage
+
 This is consistent with the results found in Table~\ref{tab:GP_loss_functions}
 for the \acrshort{rmse} and \acrshort{smse}, as well as can be seen in
 Appendix~\ref{apx:hyperparams_gp}, Figure~\ref{fig:GP_313_test_validation},
-where the model has much worse performance on the testing dataset predictions
+where \model{3}{1}{3} has much worse performance on the testing dataset predictions
 than the other two models.
 
 The performance of the three models in simulation mode is consistent with the
@@ -471,9 +476,7 @@ while still having good performance on all loss functions. In implementation,
 however, this model turned out to be very unstable, and the more conservative
 \model{1}{1}{3} model was used instead.
 
-\clearpage
-
-    \subsubsection{Sparse and Variational Gaussian Process}
+\subsubsection{Sparse and Variational Gaussian Process}
 
 For the \acrshort{svgp} models, only the performance of \model{1}{2}{3} was
 investigated, since it had the best performance according to all four loss
