@@ -351,7 +351,7 @@ computations. Other good choices for the combinations of lags are
 \model{2}{1}{3} and \model{1}{1}{3}, which have good performance on all four
 metrics, as well as being cheaper from a computational perspective. In order to
 make a more informed choice for the best hyperparameters, the simulation
-performance of all three combinations has been analysed.
+performance of all three combinations has been analyzed.
 
 \begin{table}[ht]
 %\vspace{-8pt}
@@ -403,7 +403,7 @@ the discrepancies.
 \subsubsection{Conventional Gaussian Process}
 
 The simulation performance of the three lag combinations chosen for the
-classical \acrlong{gp} models has been analysed, with the results presented in
+classical \acrlong{gp} models has been analyzed, with the results presented in
 Figures~\ref{fig:GP_113_multistep_validation},~\ref{fig:GP_213_multistep_validation}
 and~\ref{fig:GP_313_multistep_validation}. For reference, the one-step ahead
 predictions for the training and test datasets are presented in
@@ -449,8 +449,9 @@ this proves to be the best simulation model.
     \label{fig:GP_313_multistep_validation}
 \end{figure}
 
-Lastly, \model{3}{1}{3} has a much worse simulation performance than the other
-two models. This could hint at an over fitting of the model on the training data.
+Lastly, \model{3}{1}{3} (cf. Figure~\ref{fig:GP_313_multistep_validation}) has a
+much worse simulation performance than the other two models. This could hint at
+an over fitting of the model on the training data.
 
 \clearpage
 

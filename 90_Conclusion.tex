@@ -1,34 +1,55 @@
 \section{Conclusion}~\label{sec:conclusion}
 
-The aim of this project was to analyse the performance of \acrshort{gp} based
+The aim of this project was to analyze the performance of \acrshort{gp} based
 controllers for use in longer lasting implementations, where differences in
 building behaviour become important compared to the initially available data.
 
-{\color{red}
-First, the performance of a classical \acrshort{gp} model trained on 5 days
-worth of experimental data was analysed. This model turned out to be unable to
-correctly extrapolate building behaviour as the weather changed throughout the
-year.
-}
-
 First, the performance of a classical \acrshort{gp} model trained on five days
-worth of experimental data was analysed. Initially, this model performed very
+worth of experimental data was analyzed. Initially, this model performed very
 well both in one step ahead prediction and multi-step ahead simulation over new,
-unseen, data. With the change in weather, however, the model shifted  
+unseen, data. With the change in weather, however, the model shifted from
+operating in the interpolated regions to the extrapolated regions of the initial
+weather data. In this scenario the model was unable to properly predict the
+\pdome\ behaviour and, as a consequence, the \acrshort{mpc} controller became
+unstable.
 
-Several \acrshort{svgp} implementations were then analysed. They turned out to
-provide important benefits over the classical models, such as the ability to
-easily scale when new data is being added and the much reduced computational
-effort required. They do however present some downsides, namely increasing the
-number of hyperparameters by having to choose the number of inducing locations,
-as well as performing worse than then classical \acrshort{gp} implementation
-given the same amount of data.
+Following that, several \acrshort{svgp} implementations were analyzed. The
+initial behaviour exhibited during parameter identification (cf.
+Section~\ref{sec:hyperparameters}) showed that the \acrshort{svgp} model was
+less capable of capturing building dynamics only based on the initial
+experimental dataset, possibly due to the \acrshort{elbo} approximation of the
+true log likelihood. While the \acrshort{svgp} model remained stable over the
+course of the 20-step ahead simulation, in the later steps it drifted much
+further from the real values than the equivalent \acrshort{gp} model.
+However, during the full-year simulation, this downside of the \acrshort{svgp}
+model was compensated by adding new data to the model training dataset each
+night at midnight. The model performance continuously improved over the course
+of the simulation, providing much better results overall.
 
-%Finally, the possible improvements to the current implementations have been
-%addressed, noting that classical \acrshort{gp} implementations could also be
-%adapted to the \textit{learning control} paradigm, even if their implementation
-%could turn out to be much more involved and more computationally expensive than
-%the \acrshort{svgp} alternative.
+To better analyze the learning behaviour of the \acrshort{svgp} models, three
+variations of the initial \acrshort{svgp} were also simulated. The first
+variation consisted of training the initial model on only one day's worth of
+experimental data, as opposed to five days in the first case. This model was
+then regularly updated every night at midnight, just as the initial case. It
+turned out to provide very comparable results to the initial model, leading to
+the conclusion that the \acrshort{svgp} model can be initially deployed using
+much less training data, and it will still be able to correctly capture the
+building dynamics on subsequent updates.
+
+The second variation of the \acrshort{svgp} model was re-trained using a rolling
+window of five days' worth of data, in order to see the model's ability to learn 
+the proper building dynamics based only on closed-loop operation data. This
+model turned out to be unstable, and the full-year simulation showed that every
+time the model was trained using \textit{only} closed-loop operation data it
+turned unstable. This prompted a much higher excitation of the building for the
+following day, which in turn provided enough information to train a good model,
+that would last until this information was too old to be included in the
+training window, at which point the model would turn unstable again.
+
+In the last variation, the \acrshort{svgp} model was trained using a linear
+kernel. This model turned out to perform worse overall than the \acrshort{se}
+kernel model since it was unable to capture the more nuanced, non-linear
+behaviour of the building.
 
 
 \subsection{Further Research}~\label{sec:further_research}

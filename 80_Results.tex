@@ -3,10 +3,10 @@
 
 This section focuses on the presentation and interpretation of the year-long
 simulation of the control schemes presented previously. All the control schemes
-analysed in this Section have used a sampling time of 15 minutes and a control
+analyzed in this Section have used a sampling time of 15 minutes and a control
 horizon of 8 steps.
 
-Section~\ref{sec:GP_results} analyses the results of a conventional
+Section~\ref{sec:GP_results} analyzes the results of a conventional
 \acrlong{gp} Model trained on the first five days of gathered data. The model
 is then used for the rest of the year, with the goal of tracking the defined
 reference temperature.
@@ -57,9 +57,6 @@ exhibit similar performance. The spring months already make the controller less
 stable than at the start of the year, while the drastic temperature changes in
 the summer make the controller completely unstable.
 
-\clearpage
-
-
 Figure~\ref{fig:GP_fullyear_abserr} presents the absolute error measured at each
 step of the simulation over the course of the year. We can note a mean absolute
 error of 1.33 $\degree$C, with the largest deviations occurring in late summer
@@ -74,7 +71,7 @@ occurring during the winter months.
     \label{fig:GP_fullyear_abserr}
 \end{figure}
 
-Figure~\ref{fig:GP_first_model_performance} analyses the 20-step ahead
+Figure~\ref{fig:GP_first_model_performance} analyzes the 20-step ahead
 simulation performance of the identified model over the course of the year. At
 experimental step 250, the controller is still gathering data. It is therefore
 expected that the identified model will be capable of reproducing this data. At
@@ -334,6 +331,8 @@ This means that the model does not get much more complex as the data is
 gathered, but instead the same general structure is kept, with further
 refinements being done as data is added to the system.
 
+\clearpage
+
 \begin{figure}[ht]
     \centering
     \includegraphics[width =
@@ -382,6 +381,8 @@ cumbersome and potentially costly initial experiments for gathering data.
     \label{fig:SVGP_96pts_abserr}
 \end{figure}
 
+\clearpage
+
 \subsection{SVGP with a five days moving window}\label{sec:svgp_window}
 
 This section presents the result of running a different control scheme. Here, as
@@ -406,6 +407,8 @@ unstable. This instability then generates enough excitation of the plant for the
 model, to again learn its behaviour. This cycle repeats every five days, when the
 controller becomes unstable. In the stable regions, however, the controller is
 able to track the reference temperature. 
+
+\clearpage
 
 \subsection{SVGP with Linear Kernel}\label{sec:svgp_linear}
 
