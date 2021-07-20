@@ -31,7 +31,9 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v2
         with:
-          root_file: main.tex          
+          root_file: thesis.tex          
+          root_file: slides_clean.tex          
+          root_file: slides_notes.tex          
           
       - name: Release
         uses: softprops/action-gh-release@v1
