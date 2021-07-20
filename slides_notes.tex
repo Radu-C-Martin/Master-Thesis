@@ -1,0 +1,53 @@
+\documentclass{EESD}
+% To change the slides size go to EESD.cls file and edit the preamble as explained.
+
+% Show notes on second screen
+\setbeameroption{show notes on second screen=right}
+
+% Important packages to be called
+\usepackage{subcaption} % for adding sub-figures
+\usepackage{graphicx}
+\usepackage{tikz} % for cool graphics and drawings
+\usepackage{multimedia} % for embedded multimedia files
+\usepackage[final]{pdfpages} % include pdf figures
+
+\usepackage[absolute,overlay]{textpos} % To place the figures by coordinates (x,y) - Beamer doesn't support floats XD
+\usepackage{multicol} % To adjust items and stuff automatically in a number of a pre-specified columns
+\graphicspath{{Figures/}}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{lipsum} % Just a dummy text generator
+\usepackage{hyperref}
+% fonts packages
+\usepackage{ragged2e} % Justified typesetting
+
+% For References Only
+\usepackage[style=authortitle,backend=bibtex]{biblatex}
+\addbibresource{references.bib} % Call the references database
+\AtBeginBibliography{\tiny} % Specify font size (Size matters)
+\renewcommand{\footnotesize}{\tiny}
+
+% For adding code blocks
+\usepackage{listings}
+\lstset
+{
+    language=[LaTeX]TeX,
+    breaklines=true,
+    basicstyle=\tt\scriptsize,
+    keywordstyle=\color{blue},
+    identifierstyle=\color{magenta},
+    commentstyle=\color{red},
+    rulecolor=\color{black},
+    numbers=left,
+    numberstyle=\tiny\color{black},
+    % framexleftmargin=15pt,
+    frame = single,
+}
+
+\include{Sections/slides_metadata.tex}
+
+\begin{document}
+    \include{Sections/slides_content.tex}
+\end{document}
