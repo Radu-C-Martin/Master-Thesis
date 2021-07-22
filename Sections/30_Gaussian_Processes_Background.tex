@@ -144,7 +144,7 @@ choices~\cite{kocijanModellingControlDynamic2016}:
 \subsubsection*{Squared Exponential Kernel}
 
 This kernel is used when the system to be modelled is assumed to be smooth and
-continuous. The basic version of the \acrshort{se} kernel has the following form:
+continuous. The basic version of the \acrfull{se} kernel has the following form:
 
 \begin{equation}
     k(\mathbf{x}, \mathbf{x'}) = \sigma^2 \exp{\left(- \frac{1}{2}\frac{\norm{\mathbf{x} -
@@ -182,7 +182,7 @@ value of the hyperparameters. This is the \acrfull{ard} property.
 
 The \acrfull{rq} Kernel can be interpreted as an infinite sum of \acrshort{se}
 kernels with different lengthscales. It has the same smooth behaviour as the
-\acrlong{se} Kernel, but can take into account the difference in function
+\acrshort{se} Kernel, but can take into account the difference in function
 behaviour for large scale vs small scale variations.
 
 \begin{equation}
@@ -207,11 +207,11 @@ without inquiring the penalty of inverting the covariance matrix. An overview
 and comparison of multiple methods is given
 at~\cite{liuUnderstandingComparingScalable2019}.
 
-For the scope of this project, the choice of using the \acrfull{svgp} models has
-been made, since it provides a very good balance of scalability, capability,
+For the scope of this project, the choice of using the \acrshort{svgp} models
+has been made, since it provides a very good balance of scalability, capability,
 robustness and controllability~\cite{liuUnderstandingComparingScalable2019}.
 
-The \acrlong{svgp} has been first introduced
+The \acrshort{svgp} has been first introduced
 by~\textcite{hensmanGaussianProcessesBig2013} as a way to scale the use of
 \acrshort{gp}s to large datasets. A detailed explanation on the mathematics of
 \acrshort{svgp}s and reasoning behind it is given
@@ -264,7 +264,7 @@ In order to solve this problem, the log likelihood equation
 classical \acrshort{gp} is replaced with an approximate value, that is
 computationally tractable on larger sets of data.
 
-The following derivation of the \acrshort{elbo} is based on the one presented
+The following derivation of the \acrfull{elbo} is based on the one presented
 in~\cite{yangUnderstandingVariationalLower}.
 
 Assume $X$ to be the observations, and $Z$ the set parameters of the
@@ -300,7 +300,7 @@ divergence, which for variational inference takes the following form:
 \end{equation}
 \vspace{5pt}
 
-where L is the \acrfull{elbo}. Rearranging this equation we get: 
+where L is the \acrshort{elbo}. Rearranging this equation we get:
 
 \begin{equation}
     L = \log{\left(p(X)\right)} - KL\left[q(Z)||p(Z|X)\right] 
@@ -312,13 +312,13 @@ lower bound of the log probability of observations.
 \subsection{Gaussian Process Models for Dynamical
 Systems}\label{sec:gp_dynamical_system}
 
-In the context of Dynamical Systems Identification and Control, Gaussian
-Processes are used to represent different model structures, ranging from state
-space and \acrshort{nfir} structures, to the more complex \acrshort{narx},
-\acrshort{noe} and \acrshort{narmax}. 
+In the context of Dynamical Systems Identification and Control, \acrshort{gp}s
+are used to represent different model structures, ranging from state
+space and \acrfull{nfir} structures, to the more complex \acrfull{narx},
+\acrfull{noe} and \acrfull{narmax}.
 
 
-The general form of an \acrfull{narx} model is as follows:
+The general form of an \acrshort{narx} model is as follows:
 
 \begin{equation}
     \hat{y}(k) =

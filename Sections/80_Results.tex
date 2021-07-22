@@ -7,7 +7,7 @@ analyzed in this Section have used a sampling time of 15 minutes and a control
 horizon of 8 steps.
 
 Section~\ref{sec:GP_results} analyzes the results of a conventional
-\acrlong{gp} Model trained on the first five days of gathered data. The model
+\acrshort{gp} Model trained on the first five days of gathered data. The model
 is then used for the rest of the year, with the goal of tracking the defined
 reference temperature.
 
@@ -131,7 +131,7 @@ performance, but are more complex in implementation.
 
 \subsection{Sparse and Variational Gaussian Process}\label{sec:SVGP_results}
 
-The \acrlong{svgp} models are setup in a similar way as described before. The
+The \acrshort{svgp} models are setup in a similar way as described before. The
 model is first identified using 5 days worth of experimental data collected
 using a \acrshort{pi} controller and a random disturbance signal. The difference
 lies in the fact than the \acrshort{svgp} model gets re-identified every night
@@ -143,7 +143,7 @@ setup performs much better than the initial one. The only large deviations from
 the reference temperature are due to cold weather, when the \acrshort{hvac}'s
 limited heat capacity is unable to maintain the proper temperature.
 Additionnaly, the \acrshort{svgp} controller takes around 250 - 300ms of
-computation time for each simulation time, decreasing the computational cost of
+computation time for each simulation step, decreasing the computational cost of
 the original \acrshort{gp} by a factor of six.
 
 
@@ -293,7 +293,7 @@ As seen in Figure~\ref{fig:SVGP_evol_importance}, the variance of the
 signifies the increase in confidence of the model. The hyperparameters
 corresponding to the exogenous inputs --- $w1,1$ and $w1,2$ --- become generally
 less important for future predictions over the course of the year, with the
-importance of $w1,1$, the \acrlong{ghi}, climbing back up over the last, colder
+importance of $w1,1$, the \acrshort{ghi}, climbing back up over the last, colder
 months. This might be due to the fact that during the colder months, the
 \acrshort{ghi} is the only way for the exogenous inputs to \textit{provide}
 additional heat to the system.
@@ -361,7 +361,7 @@ simulation data (cf. Figures~\ref{fig:SVGP_96pts_fullyear_simulation}
 and~\ref{fig:SVGP_96pts_abserr}) it is very notable that the model performs
 almost identically to the one identified in the previous sections. This
 highlights one of the practical benefits of the \acrshort{svgp} implementations
-compared to the classical \acrlong{gp} -- it is possible to start with a rougher
+compared to the classical \acrshort{gp} -- it is possible to start with a rougher
 controller trained on less data and refine it over time, reducing the need for
 cumbersome and potentially costly initial experiments for gathering data.
 
@@ -473,7 +473,7 @@ models can be deployed with less explicit identification data, but they will
 continue to improve over the course of the year, as the building passes through
 different regions of the state space and more data is collected.
 
-However, these results do not discredit the use of \acrlong{gp} for employment
+However, these results do not discredit the use of \acrshort{gp} for employment
 in a multi-seasonal situation. As shown before, given the same amount of data
 and ignoring the computational cost, they perform better than the alternative
 \acrshort{svgp} models. The bad initial performance could be mitigated by

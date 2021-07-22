@@ -19,7 +19,7 @@ consuming computations in the case of larger number of regressors and more
 complex kernel functions.
 
 As described in Section~\ref{sec:gp_dynamical_system}, for the purpose of this
-project, the \acrlong{gp} model will be trained using the \acrshort{narx}
+project, the \acrshort{gp} model will be trained using the \acrshort{narx}
 structure. This already presents an important choice in the selection of
 regressors and their respective autoregressive lags.
 
@@ -185,7 +185,7 @@ $l_u = 1$ and $l_y = 3$ with $l_w$ taking the values of either 1, 2 or 3,
 depending on the results of further analysis.
 
 
-As for the case of the \acrlong{svgp}, the results for the classical
+As for the case of the \acrshort{svgp}, the results for the classical
 \acrshort{gp} (cf. Table~\ref{tab:GP_hyperparameters}) are not necessarily
 representative of the relationships between the regressors of the
 \acrshort{svgp} model, due to the fact that the dataset used for training is
@@ -259,8 +259,8 @@ This performance metric is very useful when training a model whose goal is
 solely to minimize the difference between the measured values, and the ones
 predicted by the model.
 
-A variant of the \acrshort{mse} is the \acrfull{smse}, which normalizes the
-\acrlong{mse} by the variance of the output values of the validation dataset.
+A variant of the \acrfull{mse} is the \acrfull{smse}, which normalizes the
+\acrshort{mse} by the variance of the output values of the validation dataset.
 
 \begin{equation}\label{eq:smse}
     \text{SMSE} = \frac{1}{N}\frac{\sum_{i=1}^N \left(y_i -
@@ -403,7 +403,7 @@ the discrepancies.
 \subsubsection{Conventional Gaussian Process}
 
 The simulation performance of the three lag combinations chosen for the
-classical \acrlong{gp} models has been analyzed, with the results presented in
+classical \acrshort{gp} models has been analyzed, with the results presented in
 Figures~\ref{fig:GP_113_multistep_validation},~\ref{fig:GP_213_multistep_validation}
 and~\ref{fig:GP_313_multistep_validation}. For reference, the one-step ahead
 predictions for the training and test datasets are presented in

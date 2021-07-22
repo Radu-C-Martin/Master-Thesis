@@ -378,7 +378,7 @@ The unit has a typical \acrlong{eer} (\acrshort{eer}, cooling efficiency) of 4.9
 maximum cooling capacity of 64.2 kW. 
 
 One particularity of this \acrshort{hvac} unit is that during summer, only one
-of the two compressors are running. This results in a higher \acrlong{eer}, in
+of the two compressors are running. This results in a higher \acrshort{eer}, in
 the cases where the full cooling capacity is not required.
 
 \subsubsection*{Ventilation}
@@ -504,7 +504,7 @@ it will oscillate between using one or two compressors. Lastly, it is possible
 to notice that the \acrshort{hvac} is not turned on during the night, with the
 exception of the external fan, which continues running.
 
-\subsubsection{The CARNOT WDB weather data format}\label{sec:CARNOT_WDB}
+\subsubsection{The CARNOT Weather Data Bus format}\label{sec:CARNOT_WDB}
 
 For a correct simulation of the building behaviour, CARNOT requires not only the
 detailed definition of the building blocks/nodes, but also a very detailed set
@@ -514,7 +514,7 @@ sun's position throughout the simulation (zenith and azimuth angles), the
 as well as information on the ambient temperature, humidity, precipitation,
 pressure, wind speed and direction, etc.  A detailed overview of each
 measurement necessary for a simulation is given in the CARNOT user
-manual~\cite{CARNOTManual}.
+manual~\cite{CARNOTManual}. This data structure is known as the \acrfull{wdb}.
 
 In order to compare the CARNOT model's performance to that of the real \pdome,
 it is necessary to simulate the CARNOT model under the same set of conditions as
@@ -532,17 +532,19 @@ are computed using the Python pvlib
 library~\cite{f.holmgrenPvlibPythonPython2018}.
 
 As opposed to the solar angles, which can be computed exactly from the available
-information, the Solar Radiation Components (DHI and DNI) have to be estimated
-from the available measurements of GHI, zenith angles (Z) and datetime
-information.  \textcite{erbsEstimationDiffuseRadiation1982} present an empirical
-relationship between GHI and the diffuse fraction DF and the ratio of GHI to
-extraterrestrial irradiance $K_t$, known as the Erbs model. The DF is then used
-to compute DHI and DNI as follows:
+information, the Solar Radiation Components (\acrshort{dhi} and \acrshort{dni})
+have to be estimated from the available measurements of \acrfull{ghi}, zenith
+angles (Z) and datetime information.
+\textcite{erbsEstimationDiffuseRadiation1982} present an empirical relationship
+between \acrshort{ghi} and the \acrfull{df} and the ratio of \acrshort{ghi} to
+extraterrestrial irradiance $K_t$, known as the Erbs model.  The \acrshort{df}
+is then used to compute \acrshort{dhi} and \acrshort{dni} as follows:
 
 \begin{equation}
     \begin{aligned}
-        \text{DHI} &= \text{DF} \times \text{GHI} \\
-        \text{DNI} &= \frac{\text{GHI} - \text{DHI}}{\cos{\text{Z}}}
+        \text{\acrshort{dhi}} &= \text{DF} \times \text{\acrshort{ghi}} \\
+        \text{\acrshort{dni}} &= \frac{\text{\acrshort{ghi}} -
+        \text{\acrshort{dhi}}}{\cos{\text{Z}}}
     \end{aligned}
 \end{equation}
 

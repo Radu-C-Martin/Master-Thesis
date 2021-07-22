@@ -48,7 +48,7 @@ the correct amount of data for the weather predictions and to properly generate
 the optimization problem, the discrete/continuous transition and vice-versa
 happens on the Simulink side. This simplifies the adjustment of the sampling
 time, with the downside of harder inclusion of meta-data such as hour of the
-day, day of the week, etc.\ in the \acrlong{gp} Model.
+day, day of the week, etc.\ in the \acrshort{gp} Model.
 
 The weather prediction is done using the information present in the CARNOT
 \acrshort{wdb} object. Since the sampling time and control horizon of the
@@ -66,13 +66,13 @@ evaluating a \acrshort{gp} has an algorithmic complexity of $\mathcal{O}(n^3)$.
 This means that naive implementations can get too expensive in terms of
 computation time very quickly.
 
-In order to have as smallest of a bottleneck as possible when dealing with
-\acrshort{gp}s, a very fast implementation of \acrlong{gp} Models was used, in
-the form of GPflow~\cite{matthewsGPflowGaussianProcess2017}. It is based on
-TensorFlow~\cite{tensorflow2015-whitepaper}, which has very efficient
-implementation of all the necessary Linear Algebra operations. Another benefit
-of this implementation is the very simple use of any additional computational
-resources, such as a GPU, TPU, etc.
+In order to have as smallest of a bottleneck as possible when dealing with the
+required algebraic operations, a very fast implementation of \acrshort{gp}
+Models was used, in the form of GPflow~\cite{matthewsGPflowGaussianProcess2017}.
+It is based on TensorFlow~\cite{tensorflow2015-whitepaper}, which has very
+efficient implementation of all the necessary Linear Algebra operations. Another
+benefit of this implementation is the very simple use of any additional
+computational resources, such as a GPU, TPU, etc.
 
 \subsubsection{Classical Gaussian Process training}
 
@@ -158,7 +158,7 @@ Let $w_l$, $u_l$, and $y_l$ be the lengths of the state vector components
 $\mathbf{w}$, $\mathbf{u}$, $\mathbf{y}$ (cf. Equation~\ref{eq:components}).
 Also, let X be the matrix of all the system states over the optimization horizon
 and W be the matrix of the predicted disturbances for all the future steps. The
-original \acrlong{ocp} can be rewritten using index notation as:
+original \acrshort{ocp} can be rewritten using index notation as:
 
 \begin{subequations}\label{eq:sparse_optimal_control_problem}
     \begin{align}
