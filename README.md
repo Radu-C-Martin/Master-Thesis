@@ -7,6 +7,9 @@ Master Project
 > *Inter-seasonal Performance of Gaussian Process-based 
 > Model Predictive Control of Buildings*
 
+which was done under the supervision of Prof. Colin Jones at the EPFL's
+[Automatic Control Laboratory](https://www.epfl.ch/labs/la/)
+
 The main folder structure is as follows: 
 
 ```shell
